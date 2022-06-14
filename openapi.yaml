@@ -1,0 +1,1075 @@
+openapi: 3.0.1
+info:
+  title: Professor Bentley Electronics Retail API
+  description: 'An ecommerce REST API for a retail electronics store. '
+  contact:
+    name: 'Mr. J.Alexander '
+    email: jordanh316@gmail.com
+  version: "1.1"
+servers:
+- url: localhost:8080
+  description: local dev server
+security:
+- basic: []
+tags:
+- name: users
+  description: User records
+- name: store
+  description: Records that pertain to items sold
+- name: products
+  description: Records of products for sale
+- name: vendors
+  description: Wholesalers where we purchase inventory
+- name: cart
+  description: users cart to place potential items to buy
+- name: orders
+  description: A record of items the user intends to buy
+- name: checkout
+  description: The user attempts to purchase items
+- name: auth
+  description: user authentication
+paths:
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: authorizes user to use system
+      description: login user into system
+      operationId: userLogin
+      responses:
+        "200":
+          description: return req.user session
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Auth
+  /auth/register:
+    post:
+      tags:
+      - auth
+      summary: registers a user into the systme
+      description: creates a new user record
+      operationId: registerNewUser
+      requestBody:
+        $ref: '#/components/requestBodies/newUser'
+      responses:
+        "200":
+          description: returns the new created user record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      x-swagger-router-controller: Auth
+  /users:
+    get:
+      tags:
+      - users
+      summary: fetchs all user records
+      description: endpoint to get an array of all user records
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: gets all user records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Users
+  /users/{userid}:
+    get:
+      tags:
+      - users
+      summary: get user record by id
+      description: endpoint to get a single user record
+      operationId: getUser
+      parameters:
+      - name: userid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/userid'
+      responses:
+        "200":
+          description: returns a user record that matches userid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Users
+    put:
+      tags:
+      - users
+      summary: update user record by id
+      description: endpoint to update a single user record
+      operationId: updateUser
+      parameters:
+      - name: userid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/userid'
+      responses:
+        "200":
+          description: returns a updated user record that matches userid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Users
+  /store/products:
+    get:
+      tags:
+      - store
+      - products
+      summary: fetchs all product records
+      description: endpoint to get an array of all product records
+      operationId: getAllproducts
+      responses:
+        "200":
+          description: gets all product records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+                x-content-type: application/json
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Store
+  /store/products/{productid}:
+    get:
+      tags:
+      - store
+      - products
+      summary: get user record by id
+      description: endpoint to get a single user record
+      operationId: getProduct
+      parameters:
+      - name: productid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/productid'
+      responses:
+        "200":
+          description: returns a product record that matches productid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Store
+    put:
+      tags:
+      - store
+      - products
+      summary: update user record by id
+      description: endpoint to update a single user record
+      operationId: updateProduct
+      parameters:
+      - name: productid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/productid'
+      requestBody:
+        $ref: '#/components/requestBodies/newProduct'
+      responses:
+        "200":
+          description: returns a updated user record that matches userid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Store
+  /store/vendors:
+    get:
+      tags:
+      - vendors
+      summary: fetchs all vendor records
+      description: endpoint to get an array of all vendor records
+      operationId: getAllvendors
+      responses:
+        "200":
+          description: gets all vendor records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+                x-content-type: application/json
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Vendors
+  /store/vendors/{vendorid}:
+    get:
+      tags:
+      - vendors
+      summary: get user record by id
+      description: endpoint to get a single vendor record
+      operationId: getVendor
+      parameters:
+      - name: vendorid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/vendorid'
+      responses:
+        "200":
+          description: returns a vendor record that matches vendorid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Vendors
+    put:
+      tags:
+      - vendors
+      summary: update vendor record by id
+      description: endpoint to update a single vendor record
+      operationId: updateVendor
+      parameters:
+      - name: vendorid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/vendorid'
+      requestBody:
+        $ref: '#/components/requestBodies/vendorRecord'
+      responses:
+        "200":
+          description: returns a updated user record that matches userid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Vendors
+  /cart:
+    post:
+      tags:
+      - cart
+      summary: creates a new user cart
+      description: endpoint to create a new user cart records
+      operationId: postNewCart
+      responses:
+        "201":
+          description: creates a new user cart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Cart
+  /cart/{cartid}:
+    put:
+      tags:
+      - cart
+      summary: update user cart by id
+      description: endpoint to update a user cart record
+      operationId: updateCartItems
+      parameters:
+      - name: cartid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/cartid'
+      responses:
+        "200":
+          description: returns a user updated user cart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Cart
+    post:
+      tags:
+      - cart
+      summary: Adds items to cart
+      description: endpoint to add items user cart
+      operationId: Add cart items
+      parameters:
+      - name: cartid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/cartid'
+      responses:
+        "200":
+          description: returns a user updated user cart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Cart
+  /orders:
+    get:
+      tags:
+      - orders
+      summary: fetchs all user orders
+      description: endpoint to get an array of all user orders
+      operationId: getAllUserOrders
+      responses:
+        "200":
+          description: gets all user orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+                x-content-type: application/json
+        "404":
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Orders
+  /orders/{orderid}:
+    post:
+      tags:
+      - orders
+      summary: post a new user order
+      description: endpoint to post a new user order
+      operationId: postNewOrder
+      parameters:
+      - name: orderid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/orderid'
+      responses:
+        "200":
+          description: returns post order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Orders
+  /checkout/{orderid}:
+    post:
+      tags:
+      - orders
+      - checkout
+      summary: post a payment for user order
+      description: endpoint to checkout a user order
+      operationId: postPayment
+      parameters:
+      - name: orderid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/parameters/orderid'
+      requestBody:
+        $ref: '#/components/requestBodies/userPayment'
+      responses:
+        "200":
+          description: returns post order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        default:
+          description: Error returned when requested information is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_default'
+      x-swagger-router-controller: Orders
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uuid
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      description: User record with user info
+      example:
+        uid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        firstName: firstName
+        lastName: lastName
+        password: ""
+        phoneNumber: phoneNumber
+        dateOfBirth: 2000-01-23T04:56:07.000+00:00
+        updatedOn: 2000-01-23T04:56:07.000+00:00
+        createdOn: 2000-01-23T04:56:07.000+00:00
+        email: ""
+        username: username
+    Product:
+      properties:
+        pid:
+          type: string
+          format: uuid
+        productName:
+          type: string
+        description:
+          type: string
+        price:
+          type: integer
+          format: float
+        onHandQuantity:
+          type: integer
+        isFeature:
+          type: boolean
+        catId:
+          type: integer
+        image:
+          type: string
+          format: binary
+        vid:
+          type: string
+          format: uuid
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      description: Product record with product info
+      example:
+        vid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        catId: 1
+        image: ""
+        price: 0
+        description: description
+        pid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        onHandQuantity: 6
+        updatedOn: 2000-01-23T04:56:07.000+00:00
+        createdOn: 2000-01-23T04:56:07.000+00:00
+        productName: productName
+        isFeature: true
+    Vendor:
+      properties:
+        vid:
+          type: string
+          format: uuid
+        vendorName:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+          format: email
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      description: Vendor record with vendor info
+      example:
+        vid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        phoneNumber: phoneNumber
+        updatedOn: 2000-01-23T04:56:07.000+00:00
+        vendorName: vendorName
+        createdOn: 2000-01-23T04:56:07.000+00:00
+        email: ""
+    Cart:
+      properties:
+        cid:
+          type: string
+          format: uuid
+        uid:
+          type: string
+          format: uuid
+        total:
+          type: integer
+        totalItems:
+          type: integer
+        isOrder:
+          type: boolean
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      description: user cart info
+      example:
+        uid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        total: 0
+        totalItems: 6
+        updatedOn: 2000-01-23T04:56:07.000+00:00
+        createdOn: 2000-01-23T04:56:07.000+00:00
+        isOrder: true
+        cid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+    CartItems:
+      type: object
+      properties:
+        cid:
+          type: string
+          format: uuid
+        pid:
+          type: string
+          format: uuid
+        quantity:
+          type: integer
+        itemSubtotal:
+          type: integer
+          format: float
+      example:
+        itemSubtotal: 6
+        quantity: 0
+        pid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        cid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+    Order:
+      type: object
+      properties:
+        oid:
+          type: string
+          format: uuid
+        subtotal:
+          type: integer
+          format: float
+        tax:
+          type: integer
+        total:
+          type: integer
+        itemsTotal:
+          type: integer
+        deliveryFee:
+          type: integer
+          format: float
+        deliveryId:
+          type: string
+          format: uuid
+        payId:
+          type: string
+          format: uuid
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItems'
+        statusId:
+          type: integer
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      description: user order record with all the details of an order
+      example:
+        total: 1
+        deliveryId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        deliveryFee: 5
+        itemsTotal: 5
+        statusId: 3
+        subtotal: 0
+        tax: 6
+        oid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        payId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        updatedOn: 2000-01-23T04:56:07.000+00:00
+        items:
+        - itemSubtotal: 7
+          quantity: 2
+          pid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          cid: 9
+        - itemSubtotal: 7
+          quantity: 2
+          pid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          cid: 9
+        createdOn: 2000-01-23T04:56:07.000+00:00
+    OrderItems:
+      type: object
+      properties:
+        quantity:
+          type: integer
+        itemSubtotal:
+          type: integer
+          format: float
+        pid:
+          type: string
+          format: uuid
+        cid:
+          type: integer
+      description: Items user has decided to order
+      example:
+        itemSubtotal: 7
+        quantity: 2
+        pid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        cid: 9
+    Payment:
+      type: object
+      properties:
+        payid:
+          type: string
+          format: uuid
+        method:
+          type: string
+        ccNumber:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        ccv:
+          type: integer
+        confirmationNumber:
+          type: integer
+        zipCode:
+          type: integer
+        oid:
+          type: string
+          format: uuid
+        statusid:
+          type: integer
+        updatedOn:
+          type: string
+          format: date-time
+        createdOn:
+          type: string
+          format: date-time
+      description: A payment object to pay for order
+      example:
+        firstName: firstName
+        lastName: lastName
+        zipCode: 5
+        ccNumber: 0
+        confirmationNumber: 1
+        method: method
+        statusid: 5
+        ccv: 6
+        payid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        oid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        updatedOn: 2000-01-23T04:56:07.000+00:00
+        createdOn: 2000-01-23T04:56:07.000+00:00
+    Delivery:
+      type: object
+      properties:
+        deliveryId:
+          type: string
+          format: uuid
+        estDelivery:
+          type: string
+          format: date-time
+        deliveryTotal:
+          type: integer
+          format: float
+        oid:
+          type: string
+          format: uuid
+        mid:
+          type: integer
+        statusid:
+          type: integer
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      description: the record of user order delivery
+    Method:
+      type: object
+      properties:
+        mid:
+          type: integer
+        method:
+          type: string
+        vid:
+          type: string
+          format: uuid
+        deliveryInHours:
+          type: integer
+          format: date-time
+        price:
+          type: integer
+          format: float
+      description: the differnt methods to ship a user order with details
+    Category:
+      type: object
+      properties:
+        catid:
+          type: integer
+        catergoryName:
+          type: string
+        description:
+          type: string
+      description: A table of catergories used in multiple types of records
+    Status:
+      type: object
+      properties:
+        statusid:
+          type: integer
+        statusName:
+          type: string
+        statusDescription:
+          type: string
+      description: a table of different status used in multiple types of records
+    Type:
+      type: object
+      properties:
+        typeid:
+          type: integer
+        name:
+          type: string
+        typeDescription:
+          type: string
+      description: a table of different types used in multiple types of records
+    Address:
+      type: object
+      properties:
+        addressid:
+          type: string
+          format: uuid
+        lineOne:
+          type: string
+        lineTwo:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: integer
+        typeid:
+          type: integer
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      description: An address object used in multiple types of records
+    UserAddress:
+      type: object
+      properties:
+        addressid:
+          type: string
+          format: uuid
+        uid:
+          type: string
+          format: uuid
+      description: a table of user addresses
+    ErrorModel:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          maximum: 600
+          minimum: 100
+          type: integer
+    ExtendedErrorModel:
+      allOf:
+      - $ref: '#/components/schemas/ErrorModel'
+      - required:
+        - rootCause
+        type: object
+        properties:
+          rootCause:
+            type: string
+    inline_response_default:
+      allOf:
+      - $ref: '#/components/schemas/ExtendedErrorModel'
+      - properties:
+          message:
+            type: string
+            default: Error! Requested Information Not FOund
+          code:
+            type: integer
+            default: 404
+    inline_response_200:
+      type: object
+      properties:
+        cart:
+          $ref: '#/components/schemas/Cart'
+        cartItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItems'
+      example:
+        cartItems:
+        - itemSubtotal: 6
+          quantity: 0
+          pid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          cid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - itemSubtotal: 6
+          quantity: 0
+          pid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          cid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        cart:
+          uid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          total: 0
+          totalItems: 6
+          updatedOn: 2000-01-23T04:56:07.000+00:00
+          createdOn: 2000-01-23T04:56:07.000+00:00
+          isOrder: true
+          cid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+  responses:
+    ErrorNotFound:
+      description: Error returned when requested information is not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_default'
+    ErrorInvalidEntry:
+      description: Error returned when invalid information is entered
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ExtendedErrorModel'
+            - properties:
+                message:
+                  type: string
+                  default: Error! Invalid Input
+                code:
+                  type: integer
+                  default: 400
+    ErrorInternal:
+      description: Error returned for server error
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ExtendedErrorModel'
+            - properties:
+                message:
+                  type: string
+                  default: Error! Server Error
+                code:
+                  type: integer
+                  default: 525
+  parameters:
+    userid:
+      name: userid
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    productid:
+      name: productid
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    cartid:
+      name: cartid
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    orderid:
+      name: orderid
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    vendorid:
+      name: vendorid
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+  requestBodies:
+    newUser:
+      description: A new user record to add to the system
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+        mulipart/formdata:
+          schema:
+            $ref: '#/components/schemas/User'
+    newProduct:
+      description: A new product to add to the system
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Product'
+        mulipart/formdata:
+          schema:
+            $ref: '#/components/schemas/Product'
+    newaddress:
+      description: a address record to add/or change in system
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Address'
+        mulipart/formdata:
+          schema:
+            $ref: '#/components/schemas/Address'
+    newOrder:
+      description: A new user order to add to the system
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Order'
+        mulipart/formdata:
+          schema:
+            $ref: '#/components/schemas/Order'
+    vendorRecord:
+      description: A new user order to add to the system
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Vendor'
+        mulipart/formdata:
+          schema:
+            $ref: '#/components/schemas/Vendor'
+    cartItems:
+      description: an array of products added to cart
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CartItems'
+        mulipart/formdata:
+          schema:
+            $ref: '#/components/schemas/CartItems'
+    userPayment:
+      description: a new user payment object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Payment'
+        mulipart/formdata:
+          schema:
+            $ref: '#/components/schemas/Payment'
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
