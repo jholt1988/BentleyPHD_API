@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false
     },
     cardNumber:{
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     CCV:{

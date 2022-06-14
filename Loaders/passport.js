@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local')
-const Auth = require('../Services/AuthService');
+// const Auth = require('../Services/AuthService');
 const logger = require('morgan');
 const { User } = require('../db');
 const { chain } = require('lodash');

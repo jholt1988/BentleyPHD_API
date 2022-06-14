@@ -25,7 +25,7 @@ module.exports = (sequelize, Sequelize) => {
 
     }
      ProductModel.init({
-        productID: {
+        productId: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true

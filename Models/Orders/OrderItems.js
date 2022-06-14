@@ -25,17 +25,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         ProductId: {
             type: DataTypes.UUID,
-            references: {
-                model: 'Products',
-                key: 'id'
-            }
-        },
-        orderId: {
-            type: DataTypes.UUID,
-            references: {
-                model: 'Orders',
-                key: 'id'
-            }
+           
         },
         total:   { 
             type: DataTypes.VIRTUAL, 

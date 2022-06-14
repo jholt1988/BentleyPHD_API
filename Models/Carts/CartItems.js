@@ -17,29 +17,20 @@ module.exports =(sequelize, Sequelize)  => {
         
         CartItemModel.init({
     
-            
-        ProductId: {
-            type: DataTypes.UUID,
-            allowNull: false, 
-            references: {
-                model: 'Products', 
-                key: 'id'
-            }
-        },
+            id:{
+                type:DataTypes.INTEGER, 
+                autoIncrement:true,
+                primaryKey:true
+            },
+        
         quantity: {
             type: DataTypes.DECIMAL,
             allowNull: false,
             
         },
-        CartId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Carts', 
-                key: 'id'
-            }
+        
             
-      },
+            
           
       total: {
           type: DataTypes.DECIMAL,

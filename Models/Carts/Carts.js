@@ -13,7 +13,7 @@ module.exports =  (sequelize, Sequelize) => {
         }
     }  
        CartModel.init({
-        id: {
+        cartId: {
             type: DataTypes.INTEGER, 
             allowNull: false, 
            primaryKey: true,

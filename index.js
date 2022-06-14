@@ -9,7 +9,9 @@ function startServer(){
 
     app.use(loaders)
     dbTest()
-    db.
+    db.sequelize.sync({force: false}).then(() => {
+        console.log('Drop And Re-Sync DB')
+    })
     app.listen(PORT, async () => {
         console.log(`Server is listening on Port:${PORT}`)
     })
