@@ -7,11 +7,16 @@ const loaders = require('./Loaders')
 
 function startServer(){
 
-    app.use(loaders)
+    loaders(app)
     dbTest()
     db.sequelize.sync({force: false}).then(() => {
         console.log('Drop And Re-Sync DB')
     })
+
+    app.get('/', function (){
+        console.log("Test")
+    })
+    
     app.listen(PORT, async () => {
         console.log(`Server is listening on Port:${PORT}`)
     })

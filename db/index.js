@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
 const UserModel = require('../Models/Users/User');
-const ProfileModel = require('../Models/Users/Profile');
 const AddressModel = require('../Models/PublicModels/Address/Address');
 const DeliveryModel = require('../Models/PublicModels/Delivery/Delivery');
 const PaymentModel = require('../Models/PublicModels/Payment/Payment');
@@ -38,7 +37,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 const User = UserModel(sequelize, Sequelize);
-const Profile = ProfileModel(sequelize, Sequelize);
 const Address = AddressModel(sequelize, Sequelize);
 const Vendor = VendorModel(sequelize, Sequelize);
 const Product = ProductModel(sequelize, Sequelize);
@@ -51,13 +49,41 @@ const Delivery = DeliveryModel(sequelize, Sequelize);
 const Payment = PaymentModel(sequelize, Sequelize);
 const Status = StatusModel(sequelize, Sequelize);
 
+User.belongsToMany(Address, {through:'UserAddress' })
+Address.belongsToMany(User,{through:'UserAddress' });
+Vendor.hasOne(Address);
+Address.belongsTo(Vendor);
+Vendor.hasMany(Product);
+Product.belongsTo(Vendor);
+Product.hasOne(CartItem);
+CartItem.belongsTo(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.hasMany(CartItem);
+CartItem.belongsTo(Cart);
+User.hasMany(Order);
+Order.belongsTo(User);
+User.hasMany(Payment);
+Payment.belongsTo(User);
+Order.hasMany(OrderItem)
+Order.hasOne(Payment);
+Payment.belongsTo(Order);
+Delivery.hasOne(Order);
+Order.belongsTo(Delivery);
+Delivery.hasOne(Address);
+Address.belongsTo(Delivery);
+Status.hasMany(Delivery);
+Delivery.belongsTo(Status);
+Status.hasMany(Order);
+Order.belongsTo(Status);
+
 
 
 module.exports = {
     db,
-    User, 
-    Profile, 
     Address,
+    AddressTypes,
+    User,  
     Product, 
     Vendor, 
     Cart, 
@@ -65,7 +91,6 @@ module.exports = {
     Order,
     OrderItem,
     dbTest,
-    AddressTypes,
     Delivery,
     Payment,
     Status

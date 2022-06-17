@@ -3,7 +3,6 @@ const LocalStrategy = require('passport-local')
 // const Auth = require('../Services/AuthService');
 const logger = require('morgan');
 const { User } = require('../db');
-const { chain } = require('lodash');
 
 
 module.exports = (app) => {
@@ -11,31 +10,40 @@ module.exports = (app) => {
     app.use(passport.session());
     app.use(logger('combined'))
 
-    passport.serializeUser((user, done) => {
-        console.log(`${user} serialized`)
-       return  done(null, user.id)
-        })
+    passport.serializeUser((function (user, done) {
+        console.log(`${user.username} serialized`)
+         done(null, {id:user.id, username:user.username})
+        }))
     
 
-    passport.deserializeUser((id, done) => {
-        User.findByPk( id ).then(user=> {
-            
-          return  done(null, { id })
-        })
-        })
+    passport.deserializeUser(function({id:id, done:{error, user}}) {
+        
+            done(null, user)
         
         
-    
+        
+    })
 
     passport.use('local', new LocalStrategy(
-        function (username, password, done) {
-        
-            authUser = User.findOne({ where: { username: username } }).then(user => {
-                hashpass = user ? user.password : ""
-                isMatch = User.validatePassword(password, hashpass, done, user)
-               return done(null, user)
-            })
+         async function (username, password, done) {
+        try{
+         const authUser = await User.findOne({where: {username: username}})
+    
+         const hashpass = authUser ? authUser.password : ""
+          
 
+         if( await User.validatePassword(password, hashpass)
+
+         ){
+             done(null, authUser)
+         }
+
+         else {
+             done(error, false)
+         } 
+        }catch (err) {
+            console.log("Something Went Wrong", Error())
+        }
     
             
         })

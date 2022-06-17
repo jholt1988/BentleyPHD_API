@@ -4,24 +4,33 @@ const bcrypt = require('bcrypt')
         
 module.exports = (sequelize, Sequelize) => {
     class UserModel extends Model {
-        static async validatePassword(password, hashpass, done, user) {
-            
-            await bcrypt.compare(password, hashpass, function (err, isMatch) {
-                if (err) {
-                    console.log(err)
-                }
-                else if (isMatch) {
-                    done(null, user)
-                } else {
-                    done(null, false)
-                }
-               
-            })
-        
-        }
+    
     
         
-        static async userExist  (username, email) {
+        
+         static validatePassword = async (password,hashpass) =>{
+
+          const cb = (err, result) =>{
+                if(err){return err}
+                return result
+            }
+        
+            try{
+            if(await bcrypt.compare(password, hashpass)){
+                
+              console.log("Login successful!")  
+              return true
+                
+            } else {
+                console.log("login unsuccessfull")
+                return false
+            }
+        } catch (err){ 
+            console.log("Something Went Wrong", err)
+        }}
+    
+        
+         async userExist  (username, email) {
             let user = await this.findOne({ where: { username: username } });
             if (user) { return { username: 'This username already taken ' } };
             user = await this.findOne({ where: { email: email } });
@@ -38,7 +47,7 @@ module.exports = (sequelize, Sequelize) => {
     
     UserModel.init({
         
-        id: {
+        userId: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
@@ -58,6 +67,9 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
+        },
+        dateOfBirth:{
+            type: DataTypes.DATEONLY
         },
         role: {
             type: DataTypes.ENUM({

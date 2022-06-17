@@ -5,7 +5,7 @@ const session = require('express-session');
 const { SESSION_SECRET } = require('../config');
 const logger = require('morgan');
 const flash = require('connect-flash')
-const {isAuthenticated} = ('./authenticate.js')
+
 
 
 
@@ -28,7 +28,7 @@ module.exports = (app) => {
     
 
     //UrlEncoded
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use(session({
         secret: SESSION_SECRET,
@@ -39,6 +39,8 @@ module.exports = (app) => {
             maxAge: 40 * 60 * 120
         }
     }));
+
+    
 
     return app;
 
