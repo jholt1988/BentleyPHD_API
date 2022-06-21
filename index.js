@@ -1,7 +1,7 @@
 const Express = require('express');
 
 const {PORT} = require('./config');
-const { dbTest, db } = require('./db');
+const { dbTest, db, Cart, CartItem } = require('./db');
 const app = Express();
 const loaders = require('./Loaders')
 
@@ -12,6 +12,9 @@ function startServer(){
     db.sequelize.sync({force: false}).then(() => {
         console.log('Drop And Re-Sync DB')
     })
+
+   
+
 
     app.get('/', function (){
         console.log("Test")

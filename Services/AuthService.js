@@ -39,34 +39,17 @@ const {User} = require('../db/index');
         
     }
 
-   async register(data){
-  
+    register(data){
+  const newUser =  User.create(data).then(user => {
+    return user
+  })
+   return newUser
 
-    try{
-   const isUserUnique = await User.userExist(data.username, data.email);
-
-   if(isUserUnique){
-  const newUser = await User.create(data)
-    function newUserLogin (err, req, next)  {
-        if(err) {return next(err); }
-        const user = {
-            id: newUser.userID,
-            username: newUser.userName 
-        }
-
-        req.login(user, function(err){
-            if(err){return next(err);}
-            next()
-
-        })
-    }
-
-    await newUserLogin()
    }
-    } catch(err){
+     catch(err){
         return new Error(err)
     }
    }
 
-}
+
 

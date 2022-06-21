@@ -1,3 +1,4 @@
+const { UUIDV4 } = require('sequelize')
 const {  DataTypes, Model } = require('sequelize')
 const CartItems = require('./CartItems')
 
@@ -11,13 +12,22 @@ module.exports =  (sequelize, Sequelize) => {
                 this.status = "ACTIVE"
             }
         }
+        lowerTotal(amount){
+        const newTotal = this.total -= amount;
+        return newTotal;
+        }
+
+        increaseTotal(amount){
+            const newTotal = this.total += amount;
+            return newTotal;
+        }
     }  
        CartModel.init({
         cartId: {
-            type: DataTypes.INTEGER, 
-            allowNull: false, 
+            type: DataTypes.UUID, 
+            defaultValue: UUIDV4,  
+            allowNull: false,
            primaryKey: true,
-           autoIncrement: true 
         },
         status: {
             type: DataTypes.ENUM({
@@ -26,8 +36,11 @@ module.exports =  (sequelize, Sequelize) => {
             }),
             defaultValue: 'ACTIVE'
             
-        }
-            
+        },
+        total: {
+            type: DataTypes.DECIMAL,
+            defaultValue: 0.00   
+        }            
        
        
         

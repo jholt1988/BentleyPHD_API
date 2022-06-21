@@ -4,8 +4,7 @@ const bcrypt = require('bcrypt')
         
 module.exports = (sequelize, Sequelize) => {
     class UserModel extends Model {
-    
-    
+
         
         
          static validatePassword = async (password,hashpass) =>{
@@ -28,15 +27,7 @@ module.exports = (sequelize, Sequelize) => {
         } catch (err){ 
             console.log("Something Went Wrong", err)
         }}
-    
-        
-         async userExist  (username, email) {
-            let user = await this.findOne({ where: { username: username } });
-            if (user) { return { username: 'This username already taken ' } };
-            user = await this.findOne({ where: { email: email } });
-            if (user) { return { email: 'This email address is already associated with another user' } };
-            return false
-        }
+
   
          
 

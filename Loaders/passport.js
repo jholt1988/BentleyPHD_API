@@ -12,11 +12,11 @@ module.exports = (app) => {
 
     passport.serializeUser((function (user, done) {
         console.log(`${user.username} serialized`)
-         done(null, {id:user.id, username:user.username})
+         done(null, {id:user.userId, username:user.username})
         }))
     
 
-    passport.deserializeUser(function({id:id, done:{error, user}}) {
+    passport.deserializeUser(function(user, done) {
         
             done(null, user)
         
