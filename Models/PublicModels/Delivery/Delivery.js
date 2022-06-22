@@ -16,7 +16,8 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.DECIMAL
         },
         deliveryTerm:{
-            type: DataTypes.INTEGER
+            type: DataTypes.DATE
+            
         }
         
     }, {sequelize, modelName:"Delivery"})

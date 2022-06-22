@@ -9,5 +9,6 @@ module.exports = {
         DBPORT:process.env.DBPORT,
         DB:process.env.DB,
         HOST: process.env.HOST
-    }
+    },
+    STRIPEKEY:process.env.STRIPEKEY
 }

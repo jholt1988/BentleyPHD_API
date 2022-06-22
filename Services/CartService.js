@@ -1,7 +1,8 @@
 const {Op} = require("sequelize")
-const {Cart, User, CartItem} = require('../db');
+const {Cart, User, CartItem, Product} = require('../db');
 const CartItems = require('../Models/Carts/CartItems');
 const cart = require('../Routes/cart');
+const {STRIPEKEY} = require('../config')
 
 
 
@@ -22,22 +23,51 @@ module.exports = class cartService {
 }
 
    async addCartItem(data){
-    try{
-        const cartItem = {
-            ProductProductId: data.ProductProductId, 
-            quantity: data.quantity, 
-            productPrice: data.productPrice, 
+    const userId =  data.userId
+    const productName = data.productName
+    const quantity  = data.quantity 
+    try{    
+        const cart = await  Cart.findOne({where:{UserUserId: userId}}).then((cart) =>
+        {
+          const cartInfo = {
+            cartId: cart.cartId, 
+            total: cart.total,
+            addTotal: cart.increaseTotal()
+            }
 
+            return cartInfo
+        }
+        )
+         const cartItem ={CartCartId:cart.cartId, ...cartItem}
 
-        };
-        const newCartItem = await CartItem.create(cartItem).then((cartItem) => {
+         const product = await  Product.findOne({where: {productName: productName}}).then((product) => {
+          const productInfo = {
+            productId: product.productId, 
+            price: product.price
+          }
+             return productInfo
+
+         })    
+          
+         const newCartItem = {
+          ...cartItem,
+          quantity: quantity, 
+          ProductProductId: product.productId, 
+          productPrice: product.price,
+          total: productPrice*quantity
+         }
+          
+        cart.addTotal(newCartItem.total)
+        const createCartItem = await CartItem.create(newCartItem).then((cartItem) => {
             if(!cartItem){
                 return new Error()
             }
             return cartItem
         });
-     if(newCartItem){
-            return newCartItem
+     if(createCartItem){
+            return {createCartItem, cart}
+
+             
         } else {
             return new Error('Error Adding Item to Cart');
         }
@@ -86,5 +116,22 @@ module.exports = class cartService {
             return new Error(err)
         }
     }
+  async checkout(data){}
+  
+  {
+    const stripe = Stripe(STRIPEKEY)
+    const cartId = data.cartId
+    const cart = await Cart.findByPk(cartId).then((cart) => {
+      return cart.total
+    })
 
+    
+    const payment = // `source` is obtained with Stripe.js; see https://stripe.com/docs/payments/accept-a-payment-charges#web-create-token
+    const charge = await stripe.charges.create({
+      amount: cart,
+      currency: 'usd',
+      source: 'tok_xxxx',
+      description: `,
+    })
+}
 }

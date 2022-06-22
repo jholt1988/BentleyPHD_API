@@ -1,4 +1,4 @@
-const { forEach, get } = require('lodash');
+
 const {  DataTypes, Model } = require('sequelize');
 const {Order} = require('../../db')
 

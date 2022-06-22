@@ -17,9 +17,10 @@ module.exports =  (sequelize, Sequelize) => {
         return newTotal;
         }
 
-        increaseTotal(amount){
-            const newTotal = this.total += amount;
-            return newTotal;
+         increaseTotal(amount){
+            console.log(this.total, amount)
+           return this.total= this.total += amount;
+            
         }
     }  
        CartModel.init({
@@ -39,7 +40,7 @@ module.exports =  (sequelize, Sequelize) => {
         },
         total: {
             type: DataTypes.DECIMAL,
-            defaultValue: 0.00   
+            defaultValue: 0.00
         }            
        
        

@@ -2,7 +2,7 @@ const express = require("express");
 const cartService = require('../Services/CartService');
 const cartServInst = new cartService();
 const router = express.Router();
-const {CartItem, Cart} = require('../db')
+const {CartItem, Cart, Product} = require('../db')
 
 
 module.exports = (app) => {
@@ -25,17 +25,16 @@ module.exports = (app) => {
     })
 
     router.post('/:cartId', async(req, res, next) => {
-        const cartItemDetails = req.body;
-        const cartId = req.body.cartId;
-        const newItem = {CartCartId:cartId, quantity: cartItemDetails.quantity, total:cartItemDetails.quantity * cartItemDetails.price, ProductProductId: cartItemDetails.ProductProductId, productPrice: cartItemDetails.price};
-        const cart = await cartServInst.getCart(cartId)
-        
-        const newCartItem = await cartServInst.addCartItem(newItem)
-        cart.increaseTotal(newCartItem.total)
-        res.send({newCartItem, cart}),
-     () => {
-      next()
-    }})
+        const {productName, quantity, } = req.body;
+        const cartId = req.params.cartId;
+        const userId = req.params.userId 
+       
+       const newCartItem = cartServInst.addCartItem({productName:productName, quantity:quantity, cartId:cartId, userId:userId})
+    
+        res.send({newCartItem})
+
+        next()
+    })
 
     router.put('/:cartId', async(req, res, next) => {
         const cartId = req.params.cartId
@@ -75,4 +74,7 @@ module.exports = (app) => {
         }
 
     })
+
+    
+    
 }
