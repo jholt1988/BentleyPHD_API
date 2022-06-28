@@ -19,8 +19,8 @@ module.exports =  (sequelize, Sequelize) => {
 
          increaseTotal(amount){
             console.log(this.total, amount)
-           return this.total= this.total += amount;
-            
+           this.total = this.total += amount;
+            console.log(this.total)
         }
     }  
        CartModel.init({

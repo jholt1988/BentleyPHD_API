@@ -33,10 +33,7 @@ module.exports =(sequelize, Sequelize)  => {
             allowNull:false
         },
     total: {
-          type: DataTypes.DECIMAL,
-            set(){
-              return  this.totalItem()
-            }
+          type: DataTypes.DECIMAL
 
             }
 

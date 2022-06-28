@@ -6,7 +6,10 @@ const { OrderItem } = require('../../db');
 
 module.exports = (sequelize, Sequelize) => {
     class OrderItemsModel extends Model {
-        
+        async createItem(item){
+           const newItem = await OrderItem.create(item)
+           return newItem 
+        }
      }
     
     OrderItemsModel.init({
@@ -23,17 +26,21 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.INTEGER,
             
         },
-        ProductId: {
+        ProductProductId: {
             type: DataTypes.UUID,
            
         },
         total:   { 
-            type: DataTypes.VIRTUAL, 
-        
-            set(){
-                total = this.quantity * this.price
-                return this.setDataValue('total') 
-            }
+            type: DataTypes.DECIMAL, 
+
+        },
+        productPrice:{
+            type: DataTypes.DECIMAL,
+
+        },
+        CartCartId:{
+            type: DataTypes.UUID,
+    
         }
         
     }, {sequelize, modelName: "OrderItem"})

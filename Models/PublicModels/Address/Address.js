@@ -26,6 +26,13 @@ module.exports = (sequelize,  Sequelize) =>{
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
+        },
+        AddressTypeId:{
+            references:{
+                model:"AddressTypes",
+                key:"typeId"
+            }
+            
         }
     }, {sequelize, modelName: "Address"})
     

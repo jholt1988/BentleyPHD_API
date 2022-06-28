@@ -1,6 +1,7 @@
 
 const {  DataTypes, Model } = require('sequelize');
-const {Order} = require('../../db')
+const {Order, OrderItem} = require('../../db');
+const OrderItems = require('./OrderItems');
 
 module.exports =(sequelize) => {
     class OrderModel extends Model {
@@ -13,8 +14,27 @@ module.exports =(sequelize) => {
                 return this.status = "DELIVERED"
             }
         }
-    }
+
     
+        
+    // static async  addItems(items){
+    //         console.log(items)
+    //       const promises =  items.map(async item => {
+    //         const newItem =await  OrderItem.createItem(item)
+    //             return newItem
+    //        }
+    //                )
+              
+             
+            
+        //     const newItems  =await Promise.all(promises)
+        //     console.log(this.items)
+        //     return newItems
+             
+        //     }  
+        // }
+        
+    }
     OrderModel.init({
         orderId: {
             type: DataTypes.UUID,
@@ -27,10 +47,11 @@ module.exports =(sequelize) => {
             
         },
         items: {
-            type: DataTypes.ARRAY(DataTypes.STRING, {
+            type: DataTypes.ARRAY(DataTypes.ABSTRACT, {
                 values: {
+
                     references: {
-                        model: 'Order Item',
+                        model: 'OrderItem',
                         key: 'id'
                 }}
             })

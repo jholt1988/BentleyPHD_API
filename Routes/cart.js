@@ -2,12 +2,17 @@ const express = require("express");
 const cartService = require('../Services/CartService');
 const cartServInst = new cartService();
 const router = express.Router();
-const {CartItem, Cart, Product} = require('../db')
+const {CartItem, Cart, Product, Delivery} = require('../db');
+const User = require("../Models/Users/User");
+const DeliveryService = require('../Services/DeliveryService');
+const moment = require("moment");
+const DeliveryServInsta = new DeliveryService
 
 
 module.exports = (app) => {
 
     app.use("/user/:userId/cart", router)
+
 
     router.post('/', async (req, res, next) => {
         const userId = req.body.userId
@@ -25,13 +30,13 @@ module.exports = (app) => {
     })
 
     router.post('/:cartId', async(req, res, next) => {
-        const {productName, quantity, } = req.body;
+        const {productName, quantity, userId} = req.body;
         const cartId = req.params.cartId;
-        const userId = req.params.userId 
-       
-       const newCartItem = cartServInst.addCartItem({productName:productName, quantity:quantity, cartId:cartId, userId:userId})
     
-        res.send({newCartItem})
+       console.log(userId)
+       const newCartItem = await cartServInst.addCartItem({productName:productName, quantity:quantity, cartId:cartId, userId:userId})
+    
+        res.send(newCartItem)
 
         next()
     })
@@ -75,6 +80,24 @@ module.exports = (app) => {
 
     })
 
-    
-    
-}
+    router.post('/checkout/:cartId', async (req, res, next) => {
+       const cartId = req.params.cartId;
+       const deliveryId = req.body.deliveryId;
+       const userId = req.body.userId                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+       
+    try{
+        // const deliveryMethod = Delivery.create({
+        //     deliveryId:deliveryId,
+        //     deliveryType:"Standard-Ground",
+        //     deliveryPrice: 22, 
+        //     deliveryTerm: moment.max(moment().add("00:00:00:114"))
+        // })
+       const checkout = await cartServInst.checkout({cartId:cartId, deliveryId: deliveryId,userId: userId})
+
+       res.send(checkout)
+       next()
+    }catch(err){
+        next(err);
+    }
+})}

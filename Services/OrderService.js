@@ -7,5 +7,6 @@ module.export =  class OrderService{
         return cart 
         }
         )
-
-        cart 
+    }
+}
+    

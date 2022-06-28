@@ -42,8 +42,9 @@ const Vendor = VendorModel(sequelize, Sequelize);
 const Product = ProductModel(sequelize, Sequelize);
 const Cart = CartModel(sequelize, Sequelize);
 const CartItem = CartItemModel(sequelize, Sequelize);
-const Order = OrderModel(sequelize, Sequelize);
 const OrderItem = OrderItemsModel(sequelize, Sequelize);
+const Order = OrderModel(sequelize, Sequelize);
+
 const AddressTypes = AddressTypeModel(sequelize, Sequelize);
 const Delivery = DeliveryModel(sequelize, Sequelize);
 const Payment = PaymentModel(sequelize, Sequelize);
