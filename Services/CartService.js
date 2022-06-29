@@ -156,7 +156,7 @@ const customer = await stripe.customers.create({
     //Create A New Order
     
     const NewOrder = async () => { return  Order.create({UserUserId:userId, total:total })}
-    const NewOrderInstantance = await  NewOrder({statu,...this})
+    const NewOrderInstantance = await  NewOrder({StatusStatusId:"0", DeliveryDeliveryId:deliveryId, ...this})
        
     //  NewOrderInstantance.items =  await Order.addItems(cartItems)
       NewOrderInstantance.items =await Promise.all(cartItems.map(async item => {

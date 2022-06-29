@@ -28,11 +28,19 @@ module.exports = (sequelize,  Sequelize) =>{
             primaryKey: true
         },
         AddressTypeId:{
+        type:DataTypes.INTEGER,
             references:{
-                model:"AddressTypes",
+                model:"AddressType",
                 key:"typeId"
             }
             
+        }, 
+        UserUserId:{
+            type: DataTypes.UUID,
+            references:{
+                model:"User",
+                key:"userId"
+            }
         }
     }, {sequelize, modelName: "Address"})
     

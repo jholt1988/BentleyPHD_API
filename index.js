@@ -9,7 +9,7 @@ function startServer(){
 
     loaders(app)
     dbTest()
-    db.sequelize.sync({force: false}).then(() => {
+    db.sequelize.sync({force:false}).then(() => {
         console.log('Drop And Re-Sync DB')
     })
      

@@ -1,12 +1,22 @@
 const {Order, Cart} = require('../db');
 
-module.export =  class OrderService{
+module.exports =  class OrderService{
 
-    async createOrder(cartId){
-        const cart = await Cart.findOne({where:{cartId: cartId}}).then((cart) =>{ 
-        return cart 
+    async findOrder(orderId){
+        const order = await Order.findOne({where:{orderId: orderId}}).then((cart) =>{ 
+        return order
         }
         )
+    }
+    async getAllUserOrders(UserId){
+        try{
+            const OrderList = await Order.findAll({where:{UserUserId:UserId}})
+            return OrderList
+        }catch(err){
+            return new Error(err)
+        }
+
+    
     }
 }
     

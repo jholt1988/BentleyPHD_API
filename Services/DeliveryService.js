@@ -21,5 +21,13 @@ return deliveryMethod
         }
     }
 
-    
+    async getDeliveryMethod(methodId){
+
+    try{
+      const deliveryMethod = await Delivery.findByPk({methodId})
+      return deliveryMethod
+    }catch(err){
+      throw new Error(err)
+    }
+  }
 }

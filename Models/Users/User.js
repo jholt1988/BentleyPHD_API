@@ -66,7 +66,8 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.ENUM({
                 values: ['ADMIN', 'EMP', 'CUSTOMER']
             }),
-            allowNull: false
+            allowNull: false, 
+            defaultValue:"CUSTOMER"
         }
     },
       
