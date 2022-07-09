@@ -20,6 +20,11 @@ module.exports = (sequelize, Sequelize) => {
 }
 
     Status.init({
+        statusId:{
+            type:DataTypes.INTEGER,
+            autoIncrementIdentity: true,
+            primaryKey:true
+        },
        
         statusName:{
             type: DataTypes.ENUM({values:['Pending', 'Approved', 'Shipped', 'Delivered' ]})

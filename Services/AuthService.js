@@ -39,8 +39,8 @@ const {User} = require('../db/index');
         
     }
 
-    register(data){
-  const newUser =  User.create(data).then(user => {
+   async register(data){
+  const newUser =  await User.create(data).then(user => {
     return user
   })
    return newUser
@@ -49,6 +49,12 @@ const {User} = require('../db/index');
      catch(err){
         return new Error(err)
     }
+
+    Logout(passport){
+      passport.logout()
+    }
+
+
    }
 
 

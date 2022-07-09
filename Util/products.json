@@ -1,0 +1,281 @@
+[
+    {
+        "productName": "Intelligent Soft Gloves",
+        "description": "quis consectetur amet proident reprehenderit excepteur fugiat exercitation veniam ut voluptate laboris minim cupidatat sit cupidatat fugiat in et velit",
+        "price": 1110.6,
+        "inStockQuantity": 334,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Sleek Concrete Mouse",
+        "description": "magna quis dolor",
+        "price": 760.8,
+        "inStockQuantity": 148,
+        "isFeatured": false,
+        "category": "Desktop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Sleek Soft Hat",
+        "description": "minim sunt minim do aliquip reprehenderit pariatur voluptate occaecat id in reprehenderit commodo reprehenderit laborum voluptate",
+        "price": 2538.1,
+        "inStockQuantity": 369,
+        "isFeatured": false,
+        "category": "Cellphones",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Incredible Plastic Fish",
+        "description": "incididunt est tempor amet",
+        "price": 1680.7,
+        "inStockQuantity": 337,
+        "isFeatured": false,
+        "category": "Wearables",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Refined Plastic Chair",
+        "description": "pariatur enim irure esse ex quis est eiusmod laborum anim",
+        "price": 54.1,
+        "inStockQuantity": 227,
+        "isFeatured": false,
+        "category": "Desktop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Sleek Wooden Chair",
+        "description": "nulla exercitation irure ea id esse fugiat id ex reprehenderit id ullamco",
+        "price": 3950.6,
+        "inStockQuantity": 411,
+        "isFeatured": true,
+        "category": "Gaming Console",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Tasty Wooden Hat",
+        "description": "exercitation non et culpa aliqua cupidatat laborum ex et",
+        "price": 2148.3,
+        "inStockQuantity": 379,
+        "isFeatured": false,
+        "category": "Gaming Console",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Fantastic Metal Chips",
+        "description": "quis sint adipisicing sunt consectetur nisi fugiat quis magna minim cillum sunt ipsum consequat excepteur qui",
+        "price": 1992.1,
+        "inStockQuantity": 183,
+        "isFeatured": false,
+        "category": "Laptop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Fantastic Rubber Table",
+        "description": "exercitation et voluptate laboris sit est nostrud ea id sint consequat",
+        "price": 4908.7,
+        "inStockQuantity": 339,
+        "isFeatured": false,
+        "category": "Desktop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Tasty Metal Gloves",
+        "description": "aute eu sit",
+        "price": 3327.2,
+        "inStockQuantity": 272,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Handcrafted Soft Shirt",
+        "description": "ut aute nulla est qui",
+        "price": 3274.8,
+        "inStockQuantity": 122,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Unbranded Rubber Pants",
+        "description": "cupidatat eu sunt exercitation sunt et mollit tempor veniam aliquip",
+        "price": 4590.9,
+        "inStockQuantity": 18,
+        "isFeatured": true,
+        "category": "Laptop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Intelligent Frozen Hat",
+        "description": "non anim cillum ex ex adipisicing ea incididunt nisi eu velit ad Lorem aute elit nostrud nostrud amet",
+        "price": 2218.6,
+        "inStockQuantity": 411,
+        "isFeatured": false,
+        "category": "Cellphones",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Incredible Metal Car",
+        "description": "occaecat laboris nulla dolor dolor officia ad minim nisi enim deserunt id proident in in qui qui sint",
+        "price": 513.2,
+        "inStockQuantity": 462,
+        "isFeatured": false,
+        "category": "Laptop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Licensed Granite Pants",
+        "description": "tempor incididunt",
+        "price": 4224.9,
+        "inStockQuantity": 276,
+        "isFeatured": false,
+        "category": "Wearables",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Small Wooden Soap",
+        "description": "duis fugiat tempor proident ipsum exercitation voluptate dolor reprehenderit nulla ullamco labore magna cupidatat aliquip duis do et qui irure cupidatat duis",
+        "price": 973.7,
+        "inStockQuantity": 283,
+        "isFeatured": true,
+        "category": "Laptop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Ergonomic Concrete Chips",
+        "description": "",
+        "price": 555.2,
+        "inStockQuantity": 117,
+        "isFeatured": false,
+        "category": "Cellphones",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Incredible Rubber Shirt",
+        "description": "ipsum ea",
+        "price": 449.8,
+        "inStockQuantity": 346,
+        "isFeatured": false,
+        "category": "Cellphones",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Handcrafted Rubber Fish",
+        "description": "aute enim consequat ad amet adipisicing proident nisi ea officia irure proident excepteur Lorem cillum",
+        "price": 3917,
+        "inStockQuantity": 282,
+        "isFeatured": false,
+        "category": "Desktop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Unbranded Metal Car",
+        "description": "est fugiat laboris proident culpa laborum id id exercitation laboris enim Lorem tempor magna elit",
+        "price": 1572.6,
+        "inStockQuantity": 379,
+        "isFeatured": false,
+        "category": "Wearables",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Practical Steel Fish",
+        "description": "in esse dolor enim exercitation mollit eiusmod pariatur aliqua eiusmod incididunt nostrud aute cillum amet minim ea tempor adipisicing aliquip pariatur officia labore dolor sit",
+        "price": 717.2,
+        "inStockQuantity": 187,
+        "isFeatured": false,
+        "category": "Cellphones",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Gorgeous Soft Pants",
+        "description": "adipisicing deserunt",
+        "price": 2218.1,
+        "inStockQuantity": 89,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Tasty Frozen Fish",
+        "description": "ullamco",
+        "price": 2108.4,
+        "inStockQuantity": 428,
+        "isFeatured": false,
+        "category": "Laptop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Small Frozen Fish",
+        "description": "elit velit qui ut laborum elit commodo dolore sit duis amet quis eiusmod ipsum consectetur qui consectetur esse laborum fugiat non laborum cillum excepteur incididunt",
+        "price": 991.9,
+        "inStockQuantity": 464,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Fantastic Soft Pants",
+        "description": "ut minim id pariatur ullamco elit mollit et ut commodo",
+        "price": 2513.3,
+        "inStockQuantity": 185,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Rustic Wooden Tuna",
+        "description": "est tempor do adipisicing excepteur voluptate cillum voluptate sit aute sint ullamco occaecat ipsum",
+        "price": 4169.1,
+        "inStockQuantity": 324,
+        "isFeatured": false,
+        "category": "Gaming Console",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Gorgeous Fresh Pizza",
+        "description": "aliqua consectetur est excepteur ipsum voluptate mollit",
+        "price": 1583.8,
+        "inStockQuantity": 293,
+        "isFeatured": false,
+        "category": "Cellphones",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Unbranded Wooden Gloves",
+        "description": "est voluptate labore aliquip elit est consequat ullamco adipisicing cupidatat eu et",
+        "price": 2881.5,
+        "inStockQuantity": 174,
+        "isFeatured": false,
+        "category": "Gaming Console",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Handmade Granite Fish",
+        "description": "duis et reprehenderit pariatur tempor cupidatat est aute et nulla ad sunt sit aliquip deserunt do sit pariatur veniam in qui",
+        "price": 2441.2,
+        "inStockQuantity": 408,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Ergonomic Concrete Shirt",
+        "description": "esse ex eiusmod elit officia incididunt excepteur minim et ex consectetur proident sint",
+        "price": 1451.5,
+        "inStockQuantity": 370,
+        "isFeatured": false,
+        "category": "Desktop",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    },
+    {
+        "productName": "Licensed Fresh Shirt",
+        "description": "veniam nulla elit mollit tempor incididunt",
+        "price": 3393.4,
+        "inStockQuantity": 4,
+        "isFeatured": false,
+        "category": "Tablet",
+        "image": "https://dummyimage.com/240X240/1db3c4/0011ff.jpg&text=Product"
+    }
+]

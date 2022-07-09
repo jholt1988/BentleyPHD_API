@@ -5,14 +5,12 @@ module.exports = (sequelize, Sequelize) => {
     class AddressTypes extends Model {}
 
     AddressTypes.init({
-        AddressAddressId:{
-         type: DataTypes.UUID,
-         references:{
-            model:"Address",
-            key: "addressId"
-         }
-        }, 
-        typeName:{
+                addressTypeId:{
+                    type: DataTypes.INTEGER,
+                    autoIncrementIdentity:true,
+                    primaryKey: true
+                },
+                typeName:{
             type: DataTypes.ENUM({values:['customer-billing', 'customer-shipping', "vendor"]})
         }
     }, {sequelize, modelName:"AddressType"})

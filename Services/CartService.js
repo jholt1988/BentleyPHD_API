@@ -29,7 +29,9 @@ module.exports = class cartService {
     const productName = data.productName
     const quantity  = data.quantity 
     try{    
-        const cart = await  Cart.findOne({where:{UserUserId:userId}})
+        const cart = await  Cart.findOne({where:{UserUserId:userId}}).then(userCart => {
+          return userCart
+        })
          
 
          const product = await  Product.findOne({where: {productName: productName}}).then((product) => {
@@ -155,8 +157,8 @@ const customer = await stripe.customers.create({
 
     //Create A New Order
     
-    const NewOrder = async () => { return  Order.create({UserUserId:userId, total:total })}
-    const NewOrderInstantance = await  NewOrder({StatusStatusId:"0", DeliveryDeliveryId:deliveryId, ...this})
+    const NewOrder = async () => { return  Order.create({UserUserId:userId, total:total, StatusStatusId:1, DeliveryDeliveryId:deliveryMethod.deliveryId, })}
+    const NewOrderInstantance = await  NewOrder({ ...this, })
        
     //  NewOrderInstantance.items =  await Order.addItems(cartItems)
       NewOrderInstantance.items =await Promise.all(cartItems.map(async item => {

@@ -1,4 +1,6 @@
 const {User} = require('../db')
+const AddressService = require('../Services/AddressService');
+const AddressServiceInsta = new AddressService()
 
 module.exports = class userService{
  async getAllUsers(){
@@ -58,11 +60,30 @@ module.exports = class userService{
         return user[1]
 
     }
-    
+    return updateUser
 
 } catch (err){
     return new Error(err)
 }
 }
+
+async addUserAddress(data){
+    const address = data.address
+    const addressType = data.addressType
+    const userId = data.userId
+    let newAddress 
+    try{
+    if (addressType === 'customer-billing'){
+        newAddress = await AddressServiceInsta.createUserBilling({address,userId})
+    } else if(addressType === 'customer-shipping'){
+        newAddress= await AddressServiceInsta.createUserShipping({address, userId})
+    }
+  return newAddress
+} catch (err){
+    return new Error(err)
+}
+
+}
+
 
 }

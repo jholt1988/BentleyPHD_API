@@ -1,13 +1,14 @@
 const {Address} = require('../db');
-const Address = require('../Models/PublicModels/Address/Address');
+
 
 
 
 module.exports = class AddressService{
 
-   async createNewAddress(data){
-   const addressType = data.addressType
+   async createUserBilling(data){
    const address = data.address
+   const userId = data.userId
+   const vendorId = data.vendorId
 
    try{
   const newAddress = await Address.create({
@@ -16,7 +17,8 @@ module.exports = class AddressService{
         city: address.city,
         state: address.state,
         zipcode: address.zipcode,
-        AddressTypeId: addressType
+        AddressType: "customer-billing", 
+        UserUserId: userId
     })
         return newAddress
    }catch(err){
@@ -24,6 +26,27 @@ module.exports = class AddressService{
    }
 
 }
+
+async createUserShipping(data){
+    const address = data.address
+ 
+    try{
+   const newAddress = await Address.create({
+         addrOne: address.addrOne, 
+         addrTwo: address.addrTwo,
+         city: address.city,
+         state: address.state,
+         zipcode: address.zipcode,
+         AddressType: "customer-shipping",
+         UserUserId: userId
+     })
+         return newAddress
+    }catch(err){
+     return new Error(err)
+    }
+ 
+ }
+ 
 
 async updateAddress(data){
     const AddressId = data.AddressId
@@ -37,6 +60,26 @@ async updateAddress(data){
     }
 }
 
+async createVendor(data){
+    const address = data.address
+ 
+    try{
+   const newAddress = await Address.create({
+         addrOne: address.addrOne, 
+         addrTwo: address.addrTwo,
+         city: address.city,
+         state: address.state,
+         zipcode: address.zipcode,
+         AddressType: "vendor",
+         VendorVendorId:vendorId
+     })
+         return newAddress
+    }catch(err){
+     return new Error(err)
+    }
+ 
+ }
+ 
 
 
 }

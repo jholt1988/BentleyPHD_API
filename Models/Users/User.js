@@ -1,5 +1,6 @@
 const { DataTypes, Model, Op } = require('sequelize');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const UsersAddresses = require('../PublicModels/Address/UsersAddresses');
 
         
 module.exports = (sequelize, Sequelize) => {
@@ -47,7 +48,6 @@ module.exports = (sequelize, Sequelize) => {
 
         username: {
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false
         },
         password: {
@@ -57,19 +57,40 @@ module.exports = (sequelize, Sequelize) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
         },
         dateOfBirth:{
-            type: DataTypes.DATEONLY
+            type: DataTypes.DATE
         },
         role: {
             type: DataTypes.ENUM({
                 values: ['ADMIN', 'EMP', 'CUSTOMER']
             }),
-            allowNull: false, 
-            defaultValue:"CUSTOMER"
-        }
-    },
+            allowNull: false
+        },
+        firstName: {
+            type:DataTypes.STRING
+        },
+        lastName:{
+            type: DataTypes.STRING
+        },
+        addresses:{
+            type: DataTypes.JSON({
+            BillingAddress:{
+
+                include: [{
+                    model:"UsersAddresses", 
+                    where: {AddressType: "BILLING"}
+            
+            }]
+            }, 
+            MailingAddress:{
+               include: [{
+                    model:"UserAddresses", 
+                    where: {AddressType: "MAILING"}
+            
+            }]
+        }})
+    }},
       
         {
             
@@ -90,10 +111,14 @@ module.exports = (sequelize, Sequelize) => {
                         
                     }
                 }
-            },
-            sequelize, modelName: 'User'
-        })
+            
+            }
         
+    ,
+           sequelize, modelName: 'User'}
+        
+    )  
 
     return UserModel
 }
+

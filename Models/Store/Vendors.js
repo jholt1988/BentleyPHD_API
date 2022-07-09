@@ -32,8 +32,17 @@ module.exports = (sequelize, Sequelize) => {
             validate:{
                 isEmail:true
             }
-        }
-      }, {sequelize, modelName: 'Vendor'})
+        }, 
+            address:{
+                type: DataTypes.ARRAY({
+                    type: DataTypes.JSON,
+                    values: {
+                        references:{model:'Addresses', 
+                                  key:"addressId"}
+                        
+                    }
+        })
+      }}, {sequelize, modelName: 'Vendor'})
 
     return VendorModel
 }

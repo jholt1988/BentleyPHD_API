@@ -60,7 +60,10 @@ module.exports = (sequelize, Sequelize) => {
                 values: ["Laptop", "Desktop", "Gaming Console", "Tablet", "Wearables", "Cellphone"]
             })
          },
-        
+        image: {
+            type: DataTypes.STRING
+            
+        }
       
     }, {sequelize, modelName: 'Product'})
 return ProductModel

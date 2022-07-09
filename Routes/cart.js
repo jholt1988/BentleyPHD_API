@@ -87,12 +87,14 @@ module.exports = (app) => {
 
        
     try{
-        // const deliveryMethod = Delivery.create({
-        //     deliveryId:deliveryId,
-        //     deliveryType:"Standard-Ground",
-        //     deliveryPrice: 22, 
-        //     deliveryTerm: moment.max(moment().add("00:00:00:114"))
-        // })
+    //     const deliveryMethod = await Delivery.create({
+    //         deliveryId:deliveryId,
+    //         deliveryType:"Standard-Ground",
+    //         deliveryPrice: 22, 
+    //         deliveryTerm: moment.max(moment().add("00:00:00:114"))
+            
+        
+    //     })
        const checkout = await cartServInst.checkout({cartId:cartId, deliveryId: deliveryId,userId: userId})
 
        res.send(checkout)
@@ -100,4 +102,5 @@ module.exports = (app) => {
     }catch(err){
         next(err);
     }
-})}
+})
+}

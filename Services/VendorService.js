@@ -1,4 +1,8 @@
 const {vendor, Vendor} =  require('../db');
+const AddressService = require('../Services/AddressService');
+const AddressServiceInsta = new AddressService()
+
+
 
 
 module.exports = class VendorService{
@@ -46,6 +50,21 @@ module.exports = class VendorService{
 
             return vendorList 
         }catch(err){
+            return new Error(err)
+        }
+    }
+    async createNewVendorAddress(data){
+        const addressType = data.addressType
+        const address = data.address
+        const vendorId = data.vendorId
+
+        try{
+            if(addressType = 'vendor'){
+             const newAddress = await AddressServiceInsta.createNewVendorAddress({address, vendorId});
+             return newAddress
+            }
+            return newAddress
+        } catch(err){
             return new Error(err)
         }
     }

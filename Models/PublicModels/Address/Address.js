@@ -27,22 +27,12 @@ module.exports = (sequelize,  Sequelize) =>{
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
-        AddressTypeId:{
-        type:DataTypes.INTEGER,
-            references:{
-                model:"AddressType",
-                key:"typeId"
-            }
-            
-        }, 
-        UserUserId:{
-            type: DataTypes.UUID,
-            references:{
-                model:"User",
-                key:"userId"
-            }
+        addressType:{
+            type: DataTypes.ENUM({values:["Mailing", "Billing", "Vendor"]})
+        },
+        
         }
-    }, {sequelize, modelName: "Address"})
+    , {sequelize, modelName: "Address"})
     
     return AddressModel
 };

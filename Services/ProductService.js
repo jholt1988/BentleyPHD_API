@@ -9,7 +9,8 @@ module.exports = class ProductService{
             price: data.price, 
             inStockQuantity: data.inStockQuantity, 
             isFeatured: data.isFeatured, 
-            catergory: data. catergory
+            catergory: data.catergory,
+            VendorVendorId: data.VendorVendorId
 
         }
 

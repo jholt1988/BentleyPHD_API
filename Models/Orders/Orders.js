@@ -47,7 +47,7 @@ module.exports =(sequelize) => {
             
         },
         items: {
-            type: DataTypes.ARRAY(DataTypes.ABSTRACT, {
+            type: DataTypes.ARRAY({type: DataTypes.JSON,
                 values: {
 
                     references: {
@@ -57,9 +57,12 @@ module.exports =(sequelize) => {
             })
            
         },
+        status: {
+            type: DataTypes.INTEGER,
+            references:{model:'Statuses', key:'statusId'}
        
     
-    }, {sequelize, modelName:'Order'})
+    }}, {sequelize, modelName:'Order'})
    return OrderModel
 }
 

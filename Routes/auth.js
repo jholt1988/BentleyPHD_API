@@ -31,7 +31,7 @@ router.post('/register',  async function (req, res, next) {
      if(newUser instanceof User){
      req.login(newUser, (error) => {
         if (error) { return next(error); }
-       return  res.redirect('/users' + req.user.userId);
+       return  res.redirect('/users/' + req.user.userId);
     })   
         
 
@@ -39,9 +39,18 @@ router.post('/register',  async function (req, res, next) {
     ;
     } catch(err){
       res.send(new Error(err))
+      next()
     }
     
-  }, () => {
-    next()
-  })
-}
+  },
+  )
+
+  router.post('/logout',  (req, res, next) => {
+    req.logout( function (err){
+    if(err){return   next(err)}
+     res.redirect("/");
+     next()
+    
+   });
+  })  
+  }

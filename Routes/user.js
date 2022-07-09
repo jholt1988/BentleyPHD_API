@@ -3,7 +3,8 @@ const {User} = require("../db");
 const userService = require('../Services/UserService');
 const router = express.Router();
 const userServInst = new userService();
-
+const AddressService = require('../Services/AddressService');
+const addressServInst = new AddressService()
 
 module.exports = (app) => {
     
@@ -57,4 +58,22 @@ module.exports = (app) => {
         }
     }
     )
+    router.post('/user/:userId/address',  async(req, res, next) => {
+        const userId = req.params.userId;
+        const billingAddress = req.params.body.billingAddress
+        const mailingAddress = req.params.body.mailingAddress
+
+        try{
+            if(billingAddress){
+           const address = await addressServInst.createUserBilling();
+              return res.send(address);
+            }
+            if(mailingAddress){
+                const  address =  await addressServInst.createUserShipping();
+               return res.send(address);
+            }
+        } catch (err) {
+           throw new Error(err)
+        }
+    })
 }
