@@ -11,7 +11,7 @@ UserAddressModel.init({
         references:{
             model:'Addresses', 
             key: "addressId"
-        }
+        }, 
     }, 
     UserUserId: {
         type:DataTypes.UUID,
@@ -19,17 +19,15 @@ UserAddressModel.init({
             model:'Users', 
             key:"userId"
         }, 
-        primaryKey:true
     },
     AddressType: {
         type: DataTypes.ENUM({
-            values:["MAILING", "BILLING"]
+            values:["Mailing", "Billing"]
         }), 
         references:{
             model:'Addresses',
-            key:'AddressType'
+            key:'addressType'
         },
-        primaryKey:true
     }
 
 }, {sequelize, modelName:'UserAddress'})

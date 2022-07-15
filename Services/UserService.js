@@ -1,4 +1,5 @@
-const {User} = require('../db')
+
+const {User, UserAddress} = require('../db')
 const AddressService = require('../Services/AddressService');
 const AddressServiceInsta = new AddressService()
 
@@ -25,7 +26,9 @@ module.exports = class userService{
 
  async getUserByUserId(userId){
     try{
-    const user = await User.findByPk(userId).then(( user) => {
+    const user = await User.findByPk(userId,{
+      include:'UserAddressess'
+    }).then(( user) => {
         if(user){
             return user
           }
@@ -35,6 +38,9 @@ module.exports = class userService{
     
     
     })
+    
+console.log(user)
+    return user
 }
 
 
@@ -48,24 +54,21 @@ module.exports = class userService{
     const key = data.data.key
     const value = data.data.value
     const id = data.id
-
-    try{
-    const user =  await User.findByPk(id).then((user => {
-        return user
-    }))
-    const updateUser= await User.update({data} , {where:{userId: id }})
+  console.log(key, value)
+   try{
     
-   console.log(user)
-    if (user){
-        return user[1]
+    const user = await User.update({
+      [key]:[value]
+    }, {where:{userId:id}})   
 
-    }
-    return updateUser
 
-} catch (err){
-    return new Error(err)
-}
-}
+        return user
+   } catch(err){
+    throw new Error(err)
+   }
+
+    
+ }
 
 async addUserAddress(data){
     const address = data.address
@@ -73,10 +76,10 @@ async addUserAddress(data){
     const userId = data.userId
     let newAddress 
     try{
-    if (addressType === 'customer-billing'){
+    if (addressType === 'Billing'){
         newAddress = await AddressServiceInsta.createUserBilling({address,userId})
-    } else if(addressType === 'customer-shipping'){
-        newAddress= await AddressServiceInsta.createUserShipping({address, userId})
+    } else if(addressType === 'Mailing'){
+        newAddress= await AddressServiceInsta.createUserMailing({address, userId})
     }
   return newAddress
 } catch (err){

@@ -1,4 +1,6 @@
-const {Address} = require('../db');
+const {Address, UserAddress} = require('../db');
+const userService = require('../Services/UserService');
+
 
 
 
@@ -17,18 +19,26 @@ module.exports = class AddressService{
         city: address.city,
         state: address.state,
         zipcode: address.zipcode,
-        AddressType: "customer-billing", 
-        UserUserId: userId
+        addressType: "Billing", 
+    
     })
-        return newAddress
+    const userAddress = await UserAddress.create({
+        AddressAddressId: newAddress.addressId,
+        UserUserId: userId,
+        AddressType: newAddress.addressType
+
+    }) 
+    console.log(userAddress, newAddress)
+        return  {newAddress, userAddress}
    }catch(err){
     return new Error(err)
    }
 
 }
 
-async createUserShipping(data){
+async createUserMailing(data){
     const address = data.address
+    const userId = data.userId
  
     try{
    const newAddress = await Address.create({
@@ -37,10 +47,22 @@ async createUserShipping(data){
          city: address.city,
          state: address.state,
          zipcode: address.zipcode,
-         AddressType: "customer-shipping",
-         UserUserId: userId
-     })
-         return newAddress
+         addressType: "Mailing",
+     }).then((async address => {
+        const userAddress = await UserAddress.create({
+            AddressAddressId: address.addressId,
+            UserUserId: userId,
+            AddressType: address.addressType
+    
+        }).then((address => {
+            return address
+         }))
+        return {address, userAddress}
+     }))
+   
+     
+    
+        return newAddress
     }catch(err){
      return new Error(err)
     }
@@ -61,7 +83,7 @@ async updateAddress(data){
 }
 
 async createVendor(data){
-    const address = data.address
+    const address = data
  
     try{
    const newAddress = await Address.create({

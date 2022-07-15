@@ -52,6 +52,9 @@ const Delivery = DeliveryModel(sequelize, Sequelize);
 const Payment = PaymentModel(sequelize, Sequelize);
 const Status = StatusModel(sequelize, Sequelize);
 
+User.belongsToMany(Address,{through: 'UserAddresses'});
+Address.belongsToMany(User, {through: 'UserAddresses'})
+
 //  User.hasMany(Address)
 // Address.belongsTo(User);
 // Vendor.hasOne(Address);

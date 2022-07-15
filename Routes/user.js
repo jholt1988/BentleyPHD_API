@@ -1,9 +1,10 @@
 const  express= require("express");
-const {User} = require("../db");
+const {User, UserAddress} = require("../db");
 const userService = require('../Services/UserService');
 const router = express.Router();
 const userServInst = new userService();
 const AddressService = require('../Services/AddressService');
+const { query } = require("express");
 const addressServInst = new AddressService()
 
 module.exports = (app) => {
@@ -23,7 +24,7 @@ module.exports = (app) => {
             }
     })
 
-    router.put('/:userId', async function(req, res, next){
+    router.put('/user/:userId', async function(req, res, next){
          
          const data = {key:req.body.key, value: req.body.value}
         const userId = req.params.userId
@@ -42,16 +43,13 @@ module.exports = (app) => {
     } 
     )
 
-    router.get('/:userId', async (req, res, next) => {
+    router.get('/user/:userId', async (req, res, next) => {
         try{
         const userId = req.params.userId;
-      const user =  userServInst.getUserByUserId(userId).then((user) => {
-        if(user){
-            return user
-        }
-        else return new Error()
-      })
-       return res.status(200).json(user)
+      const user =  await userServInst.getUserByUserId(userId)
+        res.send(user)
+
+        next()
         
         } catch(err){
             res.send(new Error(err))
@@ -60,20 +58,57 @@ module.exports = (app) => {
     )
     router.post('/user/:userId/address',  async(req, res, next) => {
         const userId = req.params.userId;
-        const billingAddress = req.params.body.billingAddress
-        const mailingAddress = req.params.body.mailingAddress
-
+        const addressType = req.body.addressType
+        const billingAddress = {
+            addrOne: req.body.addrOne,
+            addrTwo: req.body.addrTwo, 
+            city: req.body.city, 
+            state: req.body.state,
+            zipcode: req.body.zipcode,
+            addressType: 'Billing'
+        }
+        const mailingAddress = {
+            addrOne: req.body.addrOne,
+            addrTwo: req.body.addrTwo, 
+            city: req.body.city, 
+            state: req.body.state,
+            zipcode: req.body.zipcode,
+            addressType: 'Mailing'
+        }
         try{
-            if(billingAddress){
-           const address = await addressServInst.createUserBilling();
-              return res.send(address);
+            if(addressType === 'Billing'){
+           const address = await addressServInst.createUserBilling({address:billingAddress, userId:userId}).then((address => {
+            return address
+           }));
+    
+             res.send(address);
             }
-            if(mailingAddress){
-                const  address =  await addressServInst.createUserShipping();
-               return res.send(address);
+            if(addressType === 'Mailing'){
+                const  address =  await addressServInst.createUserMailing({address:mailingAddress, userId:userId}).then((address) => {
+                    return address
+                });
+                
+                console.log(address)
+                res.send(address)
+                next(null,'/user/:userId/address/' )
             }
         } catch (err) {
            throw new Error(err)
         }
-    })
+
+        router.put( '/user/:userId/address', async(req, res, next) => {
+            const userId = req.params.userId;
+                const addressId = await UserAddress.findOne({where:{
+                    UserUserId:userId
+                }})
+                console.log(addressId)
+          const updateUser = await  userServInst.updateUser({id:userId, data:{key:"addresses", value:addressId.AddressAddressId}})
+                console.log(addressId.AddressAddressId) 
+       
+                res.send(updateUser)
+
+
+            })
+        })
+    
 }

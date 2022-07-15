@@ -24,7 +24,7 @@ async function  startServer(){
     loaders(app)
     dbTest()
   
-    await db.sequelize.sync({force: false}).then(() => {
+    await db.sequelize.sync().then(() => {
         console.log('Drop And Re-Sync DB')
     })
 

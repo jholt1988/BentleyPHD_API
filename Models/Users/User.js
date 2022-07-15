@@ -74,24 +74,12 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.STRING
         },
         addresses:{
-            type: DataTypes.JSON({
-            BillingAddress:{
+            type: DataTypes.ARRAY({
+                type:DataTypes.UUID,
+        }), defaultValue:[]}
+    
+    },
 
-                include: [{
-                    model:"UsersAddresses", 
-                    where: {AddressType: "BILLING"}
-            
-            }]
-            }, 
-            MailingAddress:{
-               include: [{
-                    model:"UserAddresses", 
-                    where: {AddressType: "MAILING"}
-            
-            }]
-        }})
-    }},
-      
         {
             
             hooks: {

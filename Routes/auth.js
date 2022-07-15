@@ -31,9 +31,9 @@ router.post('/register',  async function (req, res, next) {
      if(newUser instanceof User){
      req.login(newUser, (error) => {
         if (error) { return next(error); }
-       return  res.redirect('/users/' + req.user.userId);
+     res.redirect('/users/' + newUser.userId);
     })   
-        
+      
 
       }
     ;
