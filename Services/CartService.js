@@ -12,7 +12,7 @@ const DeliveryServInsta = new deliveryService()
 module.exports = class cartService {
     
     async createCart(userId){
-   console.log(userId)
+   (userId)
         try{
       const newCart = await  Cart.create({UserUserId:userId}).then((cart => {
         return cart
@@ -29,7 +29,7 @@ module.exports = class cartService {
         })
         return otherCarts
       }))
-      console.log(otherCarts)
+      (otherCarts)
       return {newCart, otherCarts}
     } catch (err){
         return new Error(err)
@@ -37,7 +37,7 @@ module.exports = class cartService {
 }
 
    async addCartItem(data){
-    console.log(data);
+    (data);
 
     const userId =  data.userId
     const productName = data.productName
@@ -45,7 +45,7 @@ module.exports = class cartService {
     const cartId = data.cartId
     try{    
         const cart = await  Cart.findOne({where:{cartId:cartId}})
-         console.log(`CART:${cart}`, Cart)
+         (`CART:${cart}`, Cart)
 
          const product = await  Product.findOne({where: {productName: productName}}).then((product) => {
           const productInfo = {
@@ -56,7 +56,7 @@ module.exports = class cartService {
 
          })    
           const itemTotal = Number(await product.price) *  Number(quantity)
-          console.log(itemTotal)
+          (itemTotal)
          const newCartItem = {
           CartCartId: await cart.cartId,
           quantity: quantity, 
@@ -135,7 +135,7 @@ module.exports = class cartService {
     const cart = await Cart.findByPk(cartId).then((cart) => {
       return cart
     });
-  console.log(cart)
+  (cart)
   //Add Delivery Charges  
  const deliveryMethod = await DeliveryType.findByPk(deliveryId).then((dm) => {
   return dm
@@ -151,8 +151,8 @@ return total += Number(item.total)
  //Get Total Including Delivery Charges 
 const grandTotal  =  total + Number(deliveryMethod.price);
 
-console.log(cartItems[0], cartItems[1])
-console.log(grandTotal, total,  cartId)
+(cartItems[0], cartItems[1])
+(grandTotal, total,  cartId)
 const customer = await stripe.customers.create({
   description: 'test',
   source : "tok_visa"
@@ -194,8 +194,8 @@ const customer = await stripe.customers.create({
      NewOrderInstantance.save()
   
     //  NewOrderInstantance.items = await  Promise.all(promises)
-     console.log(delivery)
-    console.log(NewOrderInstantance.items)
+     (delivery)
+    (NewOrderInstantance.items)
     
   return {NewOrderInstantance, charge, customer
 }}

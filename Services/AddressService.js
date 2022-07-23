@@ -29,7 +29,7 @@ module.exports = class AddressService{
         AddressType: newAddress.addressType
 
     }) 
-    console.log(userAddress, newAddress)
+    (userAddress, newAddress)
         return  {newAddress, userAddress}
    }catch(err){
     return new Error(err)

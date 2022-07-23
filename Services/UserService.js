@@ -37,7 +37,7 @@ module.exports = class userService{
     
     })
     
-console.log(user)
+(user)
     return user
 }
 
@@ -50,7 +50,7 @@ console.log(user)
 
  async updateUser (id, key, value){
    
-  console.log(key, value)
+  (key, value)
    try{
     
     const user = await User.update({
@@ -68,12 +68,12 @@ console.log(user)
 
 async addUserAddress(addressId, userId){
     try{
-      console.log(userId)
+      (userId)
       const user = await User.findByPk(userId)
         
-    console.log(user)
+    (user)
       const addAddr = await user.setAddress(addressId)
-    console.log(user.addresses)
+    (user.addresses)
       User.upsert({
         userId:user.userId,
         addresses:addAddr,

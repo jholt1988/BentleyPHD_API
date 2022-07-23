@@ -22,9 +22,9 @@ module.exports =  (sequelize, Sequelize) => {
             }
     
              increaseTotal(amount){
-                console.log(this.total, amount)
-               this.total = this.total += amount;
-                console.log(this.total)
+               
+           const newTotal = this.total = this.total +=amount       
+            return newTotal
             }
         }  
         

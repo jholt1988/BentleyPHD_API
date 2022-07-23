@@ -28,9 +28,9 @@ module.exports = (app) => {
          
          const data = {key:req.body.key, value: req.body.value}
         const userId = req.params.userId
-        try{  console.log(req.body)
+        try{  
            const results= await userServInst.updateUser({id:userId, data: data});
-           console.log(results)
+
                 res.send(results)
             
 
@@ -81,7 +81,7 @@ module.exports = (app) => {
 
            
            const userAddress = await userServInst.addUserAddress(AddressAddressId, UserUserId)
-           console.log(address, userAddress)
+           (address, userAddress)
              res.send(address);
             }
             if(addressType === 'Mailing'){
@@ -89,10 +89,10 @@ module.exports = (app) => {
                     return address
                 });
                 const addressId = await address.address.addressId
-                console.log(addressId, userId)
+                (addressId, userId)
                 const newUserAddress = await userServInst.addUserAddress(addressId,userId )
                
-                console.log(address, newUserAddress)
+                (address, newUserAddress)
                 res.send(address)
                 
             }
@@ -105,9 +105,9 @@ module.exports = (app) => {
                 const addressId = await UserAddress.findOne({where:{
                     UserUserId:userId
                 }})
-                console.log(addressId)
+                (addressId)
           const updateUser = await  userServInst.updateUser({id:userId, data:{key:"addresses", value:addressId.AddressAddressId}})
-                console.log(addressId.AddressAddressId) 
+                (addressId.AddressAddressId) 
        
                 res.send(updateUser)[1]
 

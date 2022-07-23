@@ -61,7 +61,7 @@ module.exports = class ProductService{
                 replacements: {cat:`${catergoryName}`},
                 type: QueryTypes.SELECT
             })
-            console.log(productsList)
+            (productsList)
            
             return productsList
         }catch(err){

@@ -24,7 +24,6 @@ module.exports = (sequelize, Sequelize) => {
           async  setAddress(addressId){
                 this.set('addresses', [])
                 const userAddresses = this.addresses.push(addressId)
-                console.log(userAddresses)
                 this.save()
             return this.addresses
            
@@ -89,7 +88,7 @@ module.exports = (sequelize, Sequelize) => {
                     if (user.isNewRecord) {
                         const salt = await bcrypt.genSalt(10, "b");
                         user.password = await bcrypt.hashSync(user.password, salt)
-                        console.log(user.password)
+        
                         console.log(user.isNewRecord)
                     }
                 },
@@ -97,7 +96,7 @@ module.exports = (sequelize, Sequelize) => {
                     if (user.password) {
                         const salt = await bcrypt.genSalt(10, "b");
                         user.password = await bcrypt.hashSync(user.password, salt);
-                        console.log(user.password)
+                        
                         
                     }
                 }

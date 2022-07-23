@@ -25,7 +25,7 @@ module.exports = (app) => {
                 return (cart)
             }
         })
-        console.log(newCart)
+    
         res.send(newCart)
     
     })
@@ -34,7 +34,7 @@ module.exports = (app) => {
         const {productName, quantity, userId} = req.body;
         const cartId = req.params.cartId;
     
-       console.log(userId)
+    
        const newCartItem = await cartServInst.addCartItem({productName:productName, quantity:quantity, cartId:cartId, userId:userId})
     
         res.send(newCartItem)

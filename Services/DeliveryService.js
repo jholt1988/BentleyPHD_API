@@ -50,7 +50,7 @@ return deliveryMethod
     const newOrder = await  Delivery.create(delivery).then(delivery => {
       return delivery
     })
-console.log(newOrder)
+(newOrder)
     return newOrder
   }catch (err){
     return new Error(err)
@@ -65,10 +65,10 @@ console.log(newOrder)
       })
       const userDeliveries =   userOrderList.map((order) => {
         const delivery = order.DeliveryDeliveryId
-        console.log(delivery, order)
+        (delivery, order)
         return delivery
       })
-      console.log(userDeliveries, userOrderList)
+      (userDeliveries, userOrderList)
       userDeliveries.forEach(async (delivery) => {
         const userDelivery = await Delivery.findByPk(delivery)
       return  userDeliveryList.push(userDelivery)
