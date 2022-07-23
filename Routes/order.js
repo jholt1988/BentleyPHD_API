@@ -1,4 +1,5 @@
 const express = require('express');
+const { DeliveryType } = require('../db');
 const OrderService = require('../Services/OrderService');
 const OrderServiceInst = new OrderService();
 const router = express.Router()
@@ -27,6 +28,12 @@ module.exports = (app) => {
         }catch(err){
             next(err)
         }
+    }), 
+    router.post('/addDelivery', async (req, res, next) => {
+        const newMethodDetails = req.body 
+        const newMethod = await DeliveryType.create(newMethodDetails)
+
+        res.send(newMethod)
     })
 
 }

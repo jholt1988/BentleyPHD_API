@@ -1,4 +1,5 @@
-const {Address, UserAddress} = require('../db');
+const {Address, UserAddress, User} = require('../db');
+
 const userService = require('../Services/UserService');
 
 
@@ -60,7 +61,6 @@ async createUserMailing(data){
         return {address, userAddress}
      }))
    
-     
     
         return newAddress
     }catch(err){

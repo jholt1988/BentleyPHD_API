@@ -1,4 +1,6 @@
-const {Product, Vendor} = require('../db');
+
+const {Product, Vendor,db} = require('../db');
+const {QueryTypes} = require('sequelize');
 
 
 module.exports = class ProductService{
@@ -50,11 +52,18 @@ module.exports = class ProductService{
         }
     }
 
-    async getProductsByCatergory(catergory){
+    async getProductsByCatergory(catergoryName){
+       
         try{
-            const productsByCatergory = await Product.findAll({where:{catergory: catergory}})
-
-            return productsByCatergory
+          const productsList = await db.sequelize.query(
+            'SELECT * FROM public."Products"WHERE catergory=:cat ORDER BY "productId" ASC ', 
+            {
+                replacements: {cat:`${catergoryName}`},
+                type: QueryTypes.SELECT
+            })
+            console.log(productsList)
+           
+            return productsList
         }catch(err){
             return new Error(err)
         }

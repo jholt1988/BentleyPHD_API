@@ -1,8 +1,10 @@
 const {Op} = require("sequelize")
-const {Cart, User, CartItem, Product, Delivery, OrderItem, Order} = require('../db');
+const {Cart, User, CartItem, Product, Delivery, OrderItem, Order, DeliveryType} = require('../db');
 const CartItems = require('../Models/Carts/CartItems');
 const cart = require('../Routes/cart');
-const {STRIPEKEY} = require('../config')
+const {STRIPEKEY} = require('../config');
+const deliveryService = require('../Services/DeliveryService');
+const DeliveryServInsta = new deliveryService()
 
 
 
@@ -13,10 +15,22 @@ module.exports = class cartService {
    console.log(userId)
         try{
       const newCart = await  Cart.create({UserUserId:userId}).then((cart => {
-        return cart 
+        return cart
       }))
-    
-      return  newCart
+      const otherCarts = await Cart.findAll({where:{
+        [Op.not]:[{cartId: newCart.cartId}],
+        UserUserId:userId
+
+      }}).then((otherCarts => {
+        otherCarts.forEach(function(cart,index, otherCarts){
+          Cart.update({status:cart.changeStatus()},{where:{status:"ACTIVE"}});
+          return cart
+          
+        })
+        return otherCarts
+      }))
+      console.log(otherCarts)
+      return {newCart, otherCarts}
     } catch (err){
         return new Error(err)
     }
@@ -28,11 +42,10 @@ module.exports = class cartService {
     const userId =  data.userId
     const productName = data.productName
     const quantity  = data.quantity 
+    const cartId = data.cartId
     try{    
-        const cart = await  Cart.findOne({where:{UserUserId:userId}}).then(userCart => {
-          return userCart
-        })
-         
+        const cart = await  Cart.findOne({where:{cartId:cartId}})
+         console.log(`CART:${cart}`, Cart)
 
          const product = await  Product.findOne({where: {productName: productName}}).then((product) => {
           const productInfo = {
@@ -114,7 +127,7 @@ module.exports = class cartService {
         }
     }
   async checkout(data){
-    const  stripe = require('stripe')('sk_test_51KJmHTAjEYOrlpJbcRtNktEFaSBqHxaUsaAcPgjDQojexeyRbcGbKnqGwLIFhD0C7PP6EVUivLLYRdJMC216kzvI00hK4IjFwh');
+    const  stripe = require('stripe')(STRIPEKEY);
     const { cartId, userId, deliveryId, paymentInfo} = data
     
 
@@ -122,21 +135,21 @@ module.exports = class cartService {
     const cart = await Cart.findByPk(cartId).then((cart) => {
       return cart
     });
-  
+  console.log(cart)
   //Add Delivery Charges  
- const deliveryMethod = await Delivery.findByPk(deliveryId).then((dm) => {
+ const deliveryMethod = await DeliveryType.findByPk(deliveryId).then((dm) => {
   return dm
  });
 
 
- const cartItems= await CartItem.findAll({CartCartId: cart.cartId})
+ const cartItems= await CartItem.findAll({where:{CartCartId: cart.cartId}})
 
  const total =await cartItems.reduce((total, item) => {
 return total += Number(item.total)
  }, 0)
 
  //Get Total Including Delivery Charges 
-const grandTotal  = await total + Number(deliveryMethod.deliveryPrice);
+const grandTotal  =  total + Number(deliveryMethod.price);
 
 console.log(cartItems[0], cartItems[1])
 console.log(grandTotal, total,  cartId)
@@ -157,8 +170,8 @@ const customer = await stripe.customers.create({
 
     //Create A New Order
     
-    const NewOrder = async () => { return  Order.create({UserUserId:userId, total:total, StatusStatusId:1, DeliveryDeliveryId:deliveryMethod.deliveryId, })}
-    const NewOrderInstantance = await  NewOrder({ ...this, })
+    const NewOrder = async () => { return  Order.create({UserUserId:userId, total:total, StatusStatusId:1, status:1 })}
+    const NewOrderInstantance = await  NewOrder({ ...this })
        
     //  NewOrderInstantance.items =  await Order.addItems(cartItems)
       NewOrderInstantance.items =await Promise.all(cartItems.map(async item => {
@@ -173,14 +186,20 @@ const customer = await stripe.customers.create({
          })
   
      }))
+     const delivery = await DeliveryServInsta.newOrderDelivery(NewOrderInstantance.orderId, deliveryId,1, deliveryMethod.estimateDelivery, userId,1).then(delivery => {
+      return delivery.deliveryId
+     })
       
+     NewOrderInstantance.set('DeliveryDeliveryId', delivery)
+     NewOrderInstantance.save()
+  
     //  NewOrderInstantance.items = await  Promise.all(promises)
-     console.log(cartItems)
+     console.log(delivery)
     console.log(NewOrderInstantance.items)
     
-  return NewOrderInstantance
+  return {NewOrderInstantance, charge, customer
 }}
-
+}
 
 // .then(async (Item) =>{ Item= {
 //   id: item.id, 

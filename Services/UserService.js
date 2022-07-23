@@ -26,9 +26,7 @@ module.exports = class userService{
 
  async getUserByUserId(userId){
     try{
-    const user = await User.findByPk(userId,{
-      include:'UserAddressess'
-    }).then(( user) => {
+    const user = await User.findByPk(userId).then((user) => {
         if(user){
             return user
           }
@@ -50,15 +48,13 @@ console.log(user)
 
  }
 
- async updateUser (data){
-    const key = data.data.key
-    const value = data.data.value
-    const id = data.id
+ async updateUser (id, key, value){
+   
   console.log(key, value)
    try{
     
     const user = await User.update({
-      [key]:[value]
+      key:value
     }, {where:{userId:id}})   
 
 
@@ -70,21 +66,31 @@ console.log(user)
     
  }
 
-async addUserAddress(data){
-    const address = data.address
-    const addressType = data.addressType
-    const userId = data.userId
-    let newAddress 
+async addUserAddress(addressId, userId){
     try{
-    if (addressType === 'Billing'){
-        newAddress = await AddressServiceInsta.createUserBilling({address,userId})
-    } else if(addressType === 'Mailing'){
-        newAddress= await AddressServiceInsta.createUserMailing({address, userId})
+      console.log(userId)
+      const user = await User.findByPk(userId)
+        
+    console.log(user)
+      const addAddr = await user.setAddress(addressId)
+    console.log(user.addresses)
+      User.upsert({
+        userId:user.userId,
+        addresses:addAddr,
+        username: user.username, 
+        password: user.password, 
+        firstName: user.firstName, 
+        lastName: user.lastName, 
+        dateOFBirth: user.dateOFBirth,
+        email: user.email, 
+        role: user.role
+      }).then(([user, created]) => {
+           return user
+      })
+      return addAddr
+    }catch (err){
+      return new Error(err)
     }
-  return newAddress
-} catch (err){
-    return new Error(err)
-}
 
 }
 

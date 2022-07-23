@@ -48,11 +48,9 @@ module.exports = (app) => {
         const userId = req.params.userId;
       const user =  await userServInst.getUserByUserId(userId)
         res.send(user)
-
-        next()
         
         } catch(err){
-            res.send(new Error(err))
+            next(new Error(err))
         }
     }
     )
@@ -80,20 +78,26 @@ module.exports = (app) => {
            const address = await addressServInst.createUserBilling({address:billingAddress, userId:userId}).then((address => {
             return address
            }));
-    
+
+           
+           const userAddress = await userServInst.addUserAddress(AddressAddressId, UserUserId)
+           console.log(address, userAddress)
              res.send(address);
             }
             if(addressType === 'Mailing'){
                 const  address =  await addressServInst.createUserMailing({address:mailingAddress, userId:userId}).then((address) => {
                     return address
                 });
-                
-                console.log(address)
+                const addressId = await address.address.addressId
+                console.log(addressId, userId)
+                const newUserAddress = await userServInst.addUserAddress(addressId,userId )
+               
+                console.log(address, newUserAddress)
                 res.send(address)
-                next(null,'/user/:userId/address/' )
+                
             }
         } catch (err) {
-           throw new Error(err)
+           next(err)
         }
 
         router.put( '/user/:userId/address', async(req, res, next) => {
@@ -105,7 +109,7 @@ module.exports = (app) => {
           const updateUser = await  userServInst.updateUser({id:userId, data:{key:"addresses", value:addressId.AddressAddressId}})
                 console.log(addressId.AddressAddressId) 
        
-                res.send(updateUser)
+                res.send(updateUser)[1]
 
 
             })

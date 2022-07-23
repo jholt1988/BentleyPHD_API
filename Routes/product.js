@@ -1,9 +1,11 @@
+const { query } = require('express');
 const express = require('express');
 const { Vendor, Product } = require('../db');
 const ProductService = require('../Services/ProductService');
 const router = express.Router();
 const productServInsta =  new ProductService();
-
+const url = require('url')
+const queryString = require('querystring')
 module.exports = (app) => {
     app.use('/store/products', router)
 
@@ -30,13 +32,15 @@ module.exports = (app) => {
         }
     })
 
-    router.get('/catergory/:catergory', async(req, res, next) => {
-        const catergory = req.params.catergory;
-
+    router.get('/product/catergory' , async(req, res, next) => {
+       
+        const catName= req.query.cat
+        
         try{
-            const productsList = await productServInsta.getProductsByCatergory(catergory);
-            res.send(productsList)
-            next();
+            const productsList = await productServInsta.getProductsByCatergory(catName);
+            
+             res.send(productsList)
+        
         } catch (err){
              next(err)
         }

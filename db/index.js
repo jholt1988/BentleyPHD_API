@@ -12,6 +12,7 @@ const OrderModel = require('../Models/Orders/Orders');
 const OrderItemsModel = require('../Models/Orders/OrderItems');
 const StatusModel = require('../Models/PublicModels/Status/Status')
 const VendorAddressModel = require('../Models/PublicModels/Address/VendorAddresses')
+const DeliveryTypeModel = require('../Models/PublicModels/Delivery/DeliveryTypes')
 const { DB } = require('../config');
 const sequelize = new Sequelize(DB.DB, DB.USER, DB.PASSWORD, {
     host: DB.HOST,
@@ -21,7 +22,7 @@ const sequelize = new Sequelize(DB.DB, DB.USER, DB.PASSWORD, {
     max: 5,
     min: 0,
     idle: 1000
-     }
+     }, 
 })
 
  async function dbTest() {
@@ -49,6 +50,7 @@ const VendorAddress = VendorAddressModel(sequelize, Sequelize)
 
 const UserAddress = UserAddressModel(sequelize, Sequelize);
 const Delivery = DeliveryModel(sequelize, Sequelize);
+const DeliveryType = DeliveryTypeModel(sequelize, Sequelize )
 const Payment = PaymentModel(sequelize, Sequelize);
 const Status = StatusModel(sequelize, Sequelize);
 
@@ -59,29 +61,29 @@ Address.belongsToMany(User, {through: 'UserAddresses'})
 // Address.belongsTo(User);
 // Vendor.hasOne(Address);
 // Address.belongsTo(Vendor);
-// Vendor.hasMany(Product);
-// Product.belongsTo(Vendor);
-// Product.hasOne(CartItem);
-// CartItem.belongsTo(Product);
-// User.hasOne(Cart);
-// Cart.belongsTo(User);
-// Cart.hasMany(CartItem);
-// CartItem.belongsTo(Cart);
-// User.hasMany(Order);
-// Order.belongsTo(User);
-// User.hasMany(Payment);
-// Payment.belongsTo(User);
-// Order.hasMany(OrderItem)
-// Order.hasOne(Payment);
-// Payment.belongsTo(Order);
-// Delivery.hasOne(Order);
-// Order.belongsTo(Delivery);
-// Delivery.hasOne(Address);
-// Address.belongsTo(Delivery);
-// Status.hasMany(Delivery);
-// Delivery.belongsTo(Status);
-// Status.hasMany(Order);
-// Order.belongsTo(Status);
+Vendor.hasMany(Product);
+Product.belongsTo(Vendor);
+Product.hasOne(CartItem);
+CartItem.belongsTo(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.hasMany(CartItem);
+CartItem.belongsTo(Cart);
+User.hasMany(Order);
+Order.belongsTo(User);
+User.hasMany(Payment);
+Payment.belongsTo(User);
+Order.hasMany(OrderItem)
+Order.hasOne(Payment);
+Payment.belongsTo(Order);
+Delivery.hasOne(Order);
+Order.belongsTo(Delivery);
+Delivery.hasOne(Address);
+Address.belongsTo(Delivery);
+Status.hasMany(Delivery);
+Delivery.belongsTo(Status);
+Status.hasMany(Order);
+Order.belongsTo(Status);
 
 
 
@@ -100,5 +102,6 @@ module.exports = {
     dbTest,
     Delivery,
     Payment,
-    Status
+    Status, 
+    DeliveryType
 }

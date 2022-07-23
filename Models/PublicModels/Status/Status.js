@@ -4,32 +4,31 @@ module.exports = (sequelize, Sequelize) => {
     class Status extends Model {
         changeStatus(statusName){
          switch(statusName){
-            case('Pending'):{
-                return 'Approved'
+            case(1):{
+                return 2
             }
-            case('Approved'):{
-            return 'Shipped'
+            case(2):{
+            return 3
          }
-         case('Shipped'):{
-            return 'Delivered'
+         case(3):{
+            return 4
          }default:{
-            return 'Pending'
+            return 1
          }
         }
     }
 }
 
     Status.init({
-        statusId:{
-            type:DataTypes.INTEGER,
-            autoIncrementIdentity: true,
-            primaryKey:true
-        },
-       
-        statusName:{
-            type: DataTypes.ENUM({values:['Pending', 'Approved', 'Shipped', 'Delivered' ]})
-        }
-    }, {sequelize, modelName:"Status"})
+       statusId:{
+        type: DataTypes.INTEGER,
+        primaryKey: true
+       },
+         statusName:{
+            type: DataTypes.STRING
+         }
+    },
+      {sequelize, modelName:"Status"})
 
     return Status
 }

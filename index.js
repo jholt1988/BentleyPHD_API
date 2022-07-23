@@ -1,7 +1,7 @@
 const Express = require('express');
 
 const {PORT} = require('./config');
-const { dbTest, db, Cart, CartItem, Delivery, OrderItem, Status, User, Product, Vendor } = require('./db');
+const { dbTest, db, Cart, CartItem, Delivery, OrderItem, Status, User, Product, Vendor, UserAddress, DeliveryType } = require('./db');
 const app = Express();
 const status = require('./Models/PublicModels/Status/Status')
 const DeliveryService = require('./Services/DeliveryService');
@@ -23,12 +23,20 @@ async function  startServer(){
 
     loaders(app)
     dbTest()
-  
-    await db.sequelize.sync().then(() => {
-        console.log('Drop And Re-Sync DB')
-    })
-
-
+    // Delivery.sync({alter:true})
+   
+    // User.sync({alter:true})
+//    UserAddress.sync({alter:true})
+    
+    //  down(db.sequelize.queryInterface, db.sequelize)
+    // up(db.sequelize.queryInterface, db.sequelize)
+    // User.sync()
+    // await db.sequelize.sync({alter:true}).then(() => {
+    //     console.log('Drop And Re-Sync DB')
+    // })
+    
+   
+await 
     // await addProductData()
     // await addAddressData()
     //  await addVendorData()

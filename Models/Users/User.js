@@ -1,20 +1,12 @@
 const { DataTypes, Model, Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 const UsersAddresses = require('../PublicModels/Address/UsersAddresses');
+const { User } = require('../../db');
 
         
 module.exports = (sequelize, Sequelize) => {
     class UserModel extends Model {
-
-        
-        
-         static validatePassword = async (password,hashpass) =>{
-
-          const cb = (err, result) =>{
-                if(err){return err}
-                return result
-            }
-        
+         static async validatePassword (password,hashpass){
             try{
             if(await bcrypt.compare(password, hashpass)){
                 
@@ -29,15 +21,22 @@ module.exports = (sequelize, Sequelize) => {
             console.log("Something Went Wrong", err)
         }}
 
+          async  setAddress(addressId){
+                this.set('addresses', [])
+                const userAddresses = this.addresses.push(addressId)
+                console.log(userAddresses)
+                this.save()
+            return this.addresses
+           
+             
+               }
+
   
-         
+        
+         }
 
 
-
-    }
-
-    
-    UserModel.init({
+      UserModel.init({
         
         userId: {
             type: DataTypes.UUID,
@@ -61,12 +60,7 @@ module.exports = (sequelize, Sequelize) => {
         dateOfBirth:{
             type: DataTypes.DATE
         },
-        role: {
-            type: DataTypes.ENUM({
-                values: ['ADMIN', 'EMP', 'CUSTOMER']
-            }),
-            allowNull: false
-        },
+       
         firstName: {
             type:DataTypes.STRING
         },
@@ -75,8 +69,16 @@ module.exports = (sequelize, Sequelize) => {
         },
         addresses:{
             type: DataTypes.ARRAY({
-                type:DataTypes.UUID,
-        }), defaultValue:[]}
+                type:DataTypes.UUID
+            
+        }),
+    },
+         role: {
+            type: DataTypes.ENUM({
+                values: ['ADMIN', 'EMP', 'CUSTOMER']
+            }),
+            allowNull: false
+        },
     
     },
 
@@ -100,9 +102,10 @@ module.exports = (sequelize, Sequelize) => {
                     }
                 }
             
-            }
+            },
         
-    ,
+        
+    
            sequelize, modelName: 'User'}
         
     )  

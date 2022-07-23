@@ -26,7 +26,8 @@ module.exports = (app) => {
             }
         })
         console.log(newCart)
-        res.redirect(`/user/:${userId}/cart/${newCart.cartId}`)
+        res.send(newCart)
+    
     })
 
     router.post('/:cartId', async(req, res, next) => {
@@ -95,10 +96,11 @@ module.exports = (app) => {
             
         
     //     })
-       const checkout = await cartServInst.checkout({cartId:cartId, deliveryId: deliveryId,userId: userId})
+       const checkout = await cartServInst.checkout({cartId:cartId, deliveryId:deliveryId,userId:userId})
+       
+      
 
-       res.send(checkout)
-       next()
+       res.send(checkout.NewOrderInstantance) 
     }catch(err){
         next(err);
     }

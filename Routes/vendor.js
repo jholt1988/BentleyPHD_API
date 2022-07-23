@@ -44,7 +44,7 @@ router.post('/', async(req, res, next) => {
     try{
         const vendor = await Vendor.create({vendorName, phonenumber, vendorEmail});
         res.send(vendor)
-        next(err)
+        next()
     } catch(err){
       next(err)
     }
