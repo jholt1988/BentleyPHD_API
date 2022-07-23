@@ -25,10 +25,11 @@ router.put('/:userId/delivery/:deliveryId', async (req, res, next) => {
     const deliveryId = req.params.deliveryId
     try {
         const delivery = await Delivery.findByPk(deliveryId)
-        const changeDeliveryStatus = await  DeliveryServInsta.changeDeliveriesStatus(delivery.StatusStatusId).then((status) =>{
-                return status
+        const changeDeliveryStatus = await  DeliveryServInsta.changeDeliveriesStatus(delivery.StatusStatusId, deliveryId
+            ).then((status) =>{
+                return status.StatusStatusId
             })
-            res.send(changeDeliveryStatus)
+            res.send({status:changeDeliveryStatus})
         }
         
     catch (err) {

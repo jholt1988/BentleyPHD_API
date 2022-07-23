@@ -2,7 +2,7 @@ const {DataTypes, Model} = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
     class Status extends Model {
-        changeStatus(statusName){
+       static changeStatus(statusName){
          switch(statusName){
             case(1):{
                 return 2
