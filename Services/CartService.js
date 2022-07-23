@@ -1,7 +1,5 @@
 const {Op} = require("sequelize")
-const {Cart, User, CartItem, Product, Delivery, OrderItem, Order, DeliveryType} = require('../db');
-const CartItems = require('../Models/Carts/CartItems');
-const cart = require('../Routes/cart');
+const {Cart, CartItem, Product, OrderItem, Order, DeliveryType} = require('../db');
 const {STRIPEKEY} = require('../config');
 const deliveryService = require('../Services/DeliveryService');
 const DeliveryServInsta = new deliveryService()
@@ -11,6 +9,7 @@ const DeliveryServInsta = new deliveryService()
 
 module.exports = class cartService {
     
+  // Creates a new cart for a user.
     async createCart(userId){
    (userId)
         try{
@@ -22,7 +21,7 @@ module.exports = class cartService {
         UserUserId:userId
 
       }}).then((otherCarts => {
-        otherCarts.forEach(function(cart,index, otherCarts){
+        otherCarts.forEach(function(cart){
           Cart.update({status:cart.changeStatus()},{where:{status:"ACTIVE"}});
           return cart
           
@@ -36,10 +35,10 @@ module.exports = class cartService {
     }
 }
 
+   // Adds a new item to the cart
    async addCartItem(data){
     (data);
 
-    const userId =  data.userId
     const productName = data.productName
     const quantity  = data.quantity 
     const cartId = data.cartId
@@ -85,6 +84,7 @@ module.exports = class cartService {
         throw new Error(err)
     }
    }
+   // Deletes a cart item.
    async deleteCartItem(cartItemId, cartId){
 
      try{
@@ -108,6 +108,7 @@ module.exports = class cartService {
       }
     }
 
+    // Get a cart by id
     async getCart(cartId){
         try{
             const cart = await Cart.findByPk(cartId)
@@ -117,6 +118,7 @@ module.exports = class cartService {
         }
     }
 
+    // Updates the quantity of a cart item.
     async updateCartItem(cartId, cartItemId, quantity){
         try{
             const updateItem = await CartItem.update({[quantity]: quantity}, {where:{[Op.and]:[{CartCartId:cartId}, {id:cartItemId}]}});
@@ -126,9 +128,10 @@ module.exports = class cartService {
             return new Error(err)
         }
     }
+    // Creates a new delivery order.
   async checkout(data){
     const  stripe = require('stripe')(STRIPEKEY);
-    const { cartId, userId, deliveryId, paymentInfo} = data
+    const { cartId, userId, deliveryId} = data
     
 
     //Find User Cart
@@ -193,18 +196,10 @@ const customer = await stripe.customers.create({
      NewOrderInstantance.set('DeliveryDeliveryId', delivery)
      NewOrderInstantance.save()
   
-    //  NewOrderInstantance.items = await  Promise.all(promises)
-     (delivery)
-    (NewOrderInstantance.items)
+  NewOrderInstantance.items = await  Promise.all(promises)
+    
     
   return {NewOrderInstantance, charge, customer
 }}
 }
 
-// .then(async (Item) =>{ Item= {
-//   id: item.id, 
-//   quantity: item.quantity, 
-//   total: item.total, 
-//   ProductProductId: item.ProductProductId, 
-//   CartCartId: item.CartCartId,
-//   productPrice: item.productPrice

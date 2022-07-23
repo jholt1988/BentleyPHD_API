@@ -1,98 +1,105 @@
 
-const {User, UserAddress} = require('../db')
+const { User, UserAddress } = require('../db')
 const AddressService = require('../Services/AddressService');
 const AddressServiceInsta = new AddressService()
 
-module.exports = class userService{
- async getAllUsers(){
-  const users = await User.findAll().then(async (users) =>{
+module.exports = class userService {
+
+  // Get all users.
+  async getAllUsers() {
+    const users = await User.findAll().then(async (users) => {
 
 
+      return users
+
+    })
     return users
+  }
 
-  })
-  return users
- }
-
- async getUserByUsername(username){
-    const user =  await User.findOne({where:{username: username}}).then( async (user) =>{
-       if(user){
+  // Get a user by username.
+  async getUserByUsername(username) {
+    const user = await User.findOne({ where: { username: username } }).then(async (user) => {
+      if (user) {
         return user
-       }
-        return new Error("User Not Found. Check username and try again ")
+      }
+      return new Error("User Not Found. Check username and try again ")
     })
     return user
- }
+  }
 
- async getUserByUserId(userId){
-    try{
-    const user = await User.findByPk(userId).then((user) => {
-        if(user){
-            return user
-          }
-        else{
-            return new Error('User Not Found ')
+  // Get a user by id
+  async getUserByUserId(userId) {
+    try {
+      const user = await User.findByPk(userId).then((user) => {
+        if (user) {
+          return user
         }
-    
-    
-    })
-    
-(user)
-    return user
-}
+        else {
+          return new Error('User Not Found ')
+        }
 
 
-   catch(err){
-         return new Error("User Not Found")
+      })
+
+        (user)
+      return user
     }
 
- }
 
- async updateUser (id, key, value){
-   
-  (key, value)
-   try{
-    
-    const user = await User.update({
-      key:value
-    }, {where:{userId:id}})   
+    catch (err) {
+      return new Error("User Not Found")
+    }
 
 
-        return user
-   } catch(err){
-    throw new Error(err)
-   }
+  }
 
-    
- }
+  // Updates a user.
+  async updateUser(id, key, value) {
 
-async addUserAddress(addressId, userId){
-    try{
+    (key, value)
+    try {
+
+      const user = await User.update({
+        key: value
+      }, { where: { userId: id } })
+
+
+      return user
+    } catch (err) {
+      throw new Error(err)
+    }
+
+
+  }
+
+  // Adds a user address.
+  async addUserAddress(addressId, userId) {
+    try {
       (userId)
       const user = await User.findByPk(userId)
-        
-    (user)
+
+        (user)
       const addAddr = await user.setAddress(addressId)
-    (user.addresses)
+        (user.addresses)
       User.upsert({
-        userId:user.userId,
-        addresses:addAddr,
-        username: user.username, 
-        password: user.password, 
-        firstName: user.firstName, 
-        lastName: user.lastName, 
+        userId: user.userId,
+        addresses: addAddr,
+        username: user.username,
+        password: user.password,
+        firstName: user.firstName,
+        lastName: user.lastName,
         dateOFBirth: user.dateOFBirth,
-        email: user.email, 
+        email: user.email,
         role: user.role
       }).then(([user, created]) => {
-           return user
+        return user
       })
       return addAddr
-    }catch (err){
+    } catch (err) {
       return new Error(err)
     }
 
-}
+  }
 
 
 }

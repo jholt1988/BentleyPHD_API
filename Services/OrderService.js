@@ -1,6 +1,7 @@
 const {Order, Cart} = require('../db');
 
 module.exports =  class OrderService{
+    // Finds an order by id.
 
     async findOrder(orderId){
         const order = await Order.findOne({where:{orderId: orderId}}).then((cart) =>{ 
@@ -8,6 +9,7 @@ module.exports =  class OrderService{
         }
         )
     }
+    // Returns all orders for a user.
     async getAllUserOrders(UserId){
         try{
             const OrderList = await Order.findAll({where:{UserUserId:UserId}})
