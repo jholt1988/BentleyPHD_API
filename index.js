@@ -5,6 +5,10 @@ const { dbTest } = require('./db');
 const app = Express();
 const loaders = require('./Loaders');
 
+/**
+ *  The express server
+ *   
+ */
 async function startServer() {
 
     loaders(app)

@@ -9,7 +9,12 @@ module.exports =  class OrderService{
         }
         )
     }
-    // Returns all orders for a user.
+    /**
+     *
+     *
+     * @param {String} UserId
+     * @return {Array} Order[]
+     */
     async getAllUserOrders(UserId){
         try{
             const OrderList = await Order.findAll({where:{UserUserId:UserId}})

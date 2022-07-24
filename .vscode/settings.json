@@ -1,5 +1,22 @@
 {
     "cSpell.words": [
-        "Insta"
+        "DBPORT",
+        "Insta",
+        "Orlp",
+        "profbentretail",
+        "Qojexey",
+        "STRIPEKEY"
+    ],
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Database",
+            "database": "profbentretail",
+            "username": "postgres",
+            "password": "postgres"
+        }
     ]
 }
