@@ -10,5 +10,6 @@ module.exports = {
         DB:process.env.DB,
         HOST: process.env.HOST
     },
-    STRIPEKEY:process.env.STRIPEKEY
+    STRIPEKEY:process.env.STRIPEKEY,
+    DBURL: process.env.DBURL
 }

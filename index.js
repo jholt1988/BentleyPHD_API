@@ -1,9 +1,17 @@
 const Express = require('express');
-
-const { PORT } = require('./config');
+const {Pool} = require('pg')
+const { PORT, DBURL } = require('./config');
 const { dbTest } = require('./db');
 const app = Express();
 const loaders = require('./Loaders');
+
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL ,
+    ssl: {
+        rejectUnauthorized:false
+    }
+})
 
 /**
  *  The express server
@@ -20,10 +28,23 @@ async function startServer() {
 
 
 
-    app.get('/', function () {
-
+    app.get('/', function (req, res, err) {
+         res.render('/', (err, 'Welcome'))
         console.log("Test")
     })
+
+       app.get('/db', async (req, res) => {
+            try {
+                const client = await pool.connect();
+                const result = await client.query('SELECT * FROM test_table');
+                const results = { 'results': (result) ? result.rows : null };
+                res.render('pages/db', results);
+                client.release();
+            } catch (err) {
+                console.error(err);
+                res.send("Error " + err);
+            }
+        })
     app.listen(PORT, async () => {
         (`Server is listening on Port:${PORT}`)
     })
