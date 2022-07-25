@@ -4,6 +4,10 @@
   
   Check out the badges hosted by [shields.io](https://shields.io/).
   
+![Badge for Code Quality Status](https://api.codiga.io/project/34170/status/svg)
+
+![Badge for Code Quality Score](https://api.codiga.io/project/34170/score/svg)
+  
   
   ## Description 
   
